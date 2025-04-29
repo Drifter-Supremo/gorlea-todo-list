@@ -8,6 +8,9 @@
 - **Backend/Cloud:** Firebase (Firestore, Auth, Functions) for real-time data, authentication, and serverless logic.
 - **AI Integration:** Gemini 2.0 Flash via Google Generative AI for natural language task parsing and assistant features (Phase 3, in progress).
 - **All CRUD, time picker, mobile/desktop UX, and edit/delete features are complete and live.**
+- **Task cards: on mobile, only title and due date are shown; delete icon is hidden for clarity.**
+- **Details modal for editing and viewing full info; long-press on mobile shows only delete.**
+- **All UI labels use "Details" instead of "Description."**
 - **Documentation/memory bank is up to date for AI or developer handoff.**
 
 ## Key Technical Decisions
@@ -25,12 +28,13 @@
 - **Optimistic UI Updates:** Immediate feedback for task actions, with error handling via toasts.
 - **Single Source of Truth:** Firestore as the canonical data store for tasks.
 - **Service Abstraction:** Utility modules (e.g., lib/tasks.ts) abstract Firestore and AI logic from UI.
+- **Consistent use of "Details" field in all task-related UI and logic.**
 
 ## Component Relationships
 
 - **app-bar.tsx:** Top-level navigation and user controls.
-- **add-task-button.tsx / add-task-modal.tsx:** Entry point for new tasks, integrates AI parsing.
-- **task-list.tsx / task-row.tsx:** Display and manage tasks, connected to Firestore.
+- **add-task-button.tsx / add-task-modal.tsx:** Entry point for new tasks, integrates AI parsing. "Details" field replaces "Description."
+- **task-list.tsx / task-row.tsx:** Display and manage tasks, connected to Firestore. On mobile, only title and due date are shown; delete icon hidden.
 - **chat-button.tsx / chat-modal.tsx:** Access Gorlea AI assistant.
 - **UI components (ui/):** Shared building blocks for dialogs, buttons, forms, etc.
 

@@ -282,8 +282,8 @@ Phase 6 – Deploy to Vercel
 ## Future Enhancements
 
 - Task filtering and sorting
-- Task editing
-- Task deletion
+- Task editing (via details modal)
+- Task deletion (delete icon on desktop, long-press on mobile)
 - Task categories/tags
 - User authentication
 - Data persistence
@@ -291,18 +291,14 @@ Phase 6 – Deploy to Vercel
 - Notifications
 - Advanced AI features (task suggestions, reminders, etc.)
 
-  
+- Task cards: only title and due date shown on mobile, delete icon hidden for cleaner look.
+- Details modal for editing and viewing full info; long-press on mobile shows only delete.
+- All UI labels use "Details" instead of "Description."
 
 Task editing & deletion UI
 
-  
-
 Sorting/filtering & calendar view
 
-  
-
 Chat‑style Gorlea assistant panel
-
-  
 
 Per‑task push notifications

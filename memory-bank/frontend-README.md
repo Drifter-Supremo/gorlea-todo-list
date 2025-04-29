@@ -9,6 +9,7 @@ A minimal task management web application with an AI assistant built using Next.
 - **Task Management**
   - Create, view, and complete tasks
   - Set due dates and priority levels
+  - Add details to tasks (with "Details" field, not "Description")
   - Organize tasks into "To Do" and "Completed" sections
   
 - **AI Assistant**
@@ -19,6 +20,7 @@ A minimal task management web application with an AI assistant built using Next.
 - **User Interface**
   - Clean, minimal design with custom color scheme
   - Responsive layout for all device sizes
+  - On mobile, task cards show only title and due date for clarity; delete icon is hidden
   - Floating action buttons for adding tasks and chatting with AI
   - Modal dialogs for task creation and AI chat
 
@@ -64,8 +66,8 @@ gorlea-tasks/
 ## Future Enhancements
 
 - Task filtering and sorting
-- Task editing
-- Task deletion
+- Task editing (via details modal)
+- Task deletion (delete icon on desktop, long-press on mobile)
 - Task categories/tags
 - User authentication
 - Data persistence

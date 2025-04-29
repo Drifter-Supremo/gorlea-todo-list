@@ -5,7 +5,7 @@
 - **Next.js 14**: React framework with App Router for routing and layouts.
 - **React**: UI library for building interactive interfaces.
 - **TypeScript**: Type-safe JavaScript for reliability and maintainability.
-- **Tailwind CSS**: Utility-first CSS framework for rapid styling.
+- **Tailwind CSS**: Utility-first CSS framework for rapid styling and responsive/mobile-first design.
 - **shadcn/ui**: Reusable, accessible UI component library.
 - **date-fns**: Date utility library for parsing and formatting.
 - **Lucide React**: Icon library for consistent UI icons.
@@ -21,6 +21,9 @@
 - Local development with `pnpm run dev`.
 - Firebase emulators for local testing of Firestore and Functions.
 - Deployment via Vercel for production hosting.
+- Task cards: only title and due date shown on mobile, delete icon hidden for cleaner look.
+- Details modal for editing and viewing full info; long-press on mobile shows only delete.
+- All UI labels use "Details" instead of "Description."
 
 ## Technical Constraints
 

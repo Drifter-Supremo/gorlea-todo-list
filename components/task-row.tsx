@@ -91,7 +91,7 @@ export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowP
       </Badge>
       <button
         title="Delete Task"
-        className="ml-1 p-1 rounded hover:bg-red-600/20 text-[#F5E8C2]"
+        className="ml-1 p-1 rounded hover:bg-red-600/20 text-[#F5E8C2] hidden sm:inline-flex"
         onClick={e => { e.stopPropagation(); setShowDeleteDialog(true); }}
       >
         <Trash className="w-4 h-4" />
@@ -105,7 +105,6 @@ export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowP
             <DialogTitle className="text-[#F29600] text-center">Task Actions</DialogTitle>
           </DialogHeader>
           <div className="flex flex-col gap-3 py-2">
-            <Button onClick={() => { setShowActionModal(false); onEdit(task); }} className="bg-[#F29600] hover:bg-[#F29600]/90 text-[#032934]">Edit</Button>
             <Button onClick={() => { setShowActionModal(false); setShowDeleteDialog(true); }} variant="destructive" className="bg-red-600 hover:bg-red-700">Delete</Button>
           </div>
         </DialogContent>

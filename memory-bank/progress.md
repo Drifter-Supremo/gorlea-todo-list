@@ -11,8 +11,9 @@
 - Authentication hook implemented (hooks/useAuth.tsx).
 - Firestore CRUD helpers fully implemented and integrated with UI.
 - Add/Edit Task modal supports time picker (15-min increments, mobile/desktop friendly).
-- Mobile long-press gesture on task rows opens centered modal for Edit/Delete.
-- Desktop/tablet: edit/delete icons always visible for quick access.
+- Task cards: only title and due date shown on mobile, delete icon hidden for cleaner look.
+- Details modal for editing and viewing full info; long-press on mobile shows only delete.
+- All UI labels use "Details" instead of "Description."
 - Minimal delete confirmation dialog (all devices).
 - Edit modal improvements: pre-filling, unified for add/edit.
 - All changes tested and committed/pushed to repo.
@@ -26,7 +27,7 @@
 - Integrate Gemini AI parsing for natural language task input.
 - Establish daily email digest functionality.
 - Prepare for deployment to Vercel and production testing.
-- Implement future enhancements: task filtering, description/details field, categories, calendar view, notifications, advanced AI features.
+- Implement future enhancements: task filtering, details field, categories, calendar view, notifications, advanced AI features.
 
 ## Current Status
 

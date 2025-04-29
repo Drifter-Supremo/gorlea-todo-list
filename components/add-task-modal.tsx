@@ -97,7 +97,7 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
           </div>
           <div className="grid gap-2">
             <Label htmlFor="description" className="text-[#F5E8C2]">
-              Details / Description
+              Details
             </Label>
             <Textarea
               id="description"
