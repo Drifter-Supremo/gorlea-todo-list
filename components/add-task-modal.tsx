@@ -17,12 +17,13 @@ interface AddTaskModalProps {
   isOpen: boolean
   onClose: () => void
   onAddTask: (task: Omit<Task, "id" | "completed">) => void
+  initialValues?: Partial<Omit<Task, "completed">>
 }
 
-export function AddTaskModal({ isOpen, onClose, onAddTask }: AddTaskModalProps) {
-  const [title, setTitle] = useState("")
-  const [dueDate, setDueDate] = useState<Date>(new Date())
-  const [priority, setPriority] = useState<Task["priority"]>("medium")
+export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddTaskModalProps) {
+  const [title, setTitle] = useState(initialValues?.title || "")
+  const [dueDate, setDueDate] = useState<Date>(initialValues?.dueDate ? new Date(initialValues.dueDate) : new Date())
+  const [priority, setPriority] = useState<Task["priority"]>(initialValues?.priority || "medium")
 
   const handleSubmit = () => {
     if (!title.trim()) return
@@ -33,17 +34,21 @@ export function AddTaskModal({ isOpen, onClose, onAddTask }: AddTaskModalProps) 
       priority,
     })
 
-    // Reset form
-    setTitle("")
-    setDueDate(new Date())
-    setPriority("medium")
+    // Reset form only if adding (not editing)
+    if (!initialValues) {
+      setTitle("")
+      setDueDate(new Date())
+      setPriority("medium")
+    }
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="bg-[#032934] text-[#F5E8C2] border-[#F5E8C2]/20 sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-[#F5E8C2]">Add New Task</DialogTitle>
+          <DialogTitle className="text-[#F5E8C2]">
+            {initialValues ? "Edit Task" : "Add New Task"}
+          </DialogTitle>
         </DialogHeader>
 
         <div className="grid gap-4 py-4">
@@ -119,7 +124,7 @@ export function AddTaskModal({ isOpen, onClose, onAddTask }: AddTaskModalProps) 
             className="bg-[#F29600] hover:bg-[#F29600]/90 text-[#032934]"
             disabled={!title.trim()}
           >
-            Save Task
+            {initialValues ? "Save Changes" : "Save Task"}
           </Button>
         </DialogFooter>
       </DialogContent>

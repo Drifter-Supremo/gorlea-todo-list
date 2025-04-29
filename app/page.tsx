@@ -38,11 +38,15 @@ import { useAuth } from "@/hooks/useAuth"
 import { getTasks, addTask as addTaskFirestore, updateTask as updateTaskFirestore, deleteTask as deleteTaskFirestore } from "@/lib/firestore"
 import { useEffect } from "react"
 
+import { useCallback } from "react"
+
 export default function Home() {
   const { user, loading } = useAuth();
   const userId = user?.uid;
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editTask, setEditTask] = useState<Task | null>(null);
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
 
   // Fetch tasks from Firestore when user is signed in
@@ -83,6 +87,24 @@ export default function Home() {
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
+  // Edit a task (open modal)
+  const handleEditTask = useCallback((task: Task) => {
+    setEditTask(task);
+    setIsEditModalOpen(true);
+  }, []);
+
+  // Update a task in Firestore and UI
+  const updateTask = async (updated: Omit<Task, "completed"> & { id: string }) => {
+    if (!userId) return;
+    await updateTaskFirestore(userId, updated.id, {
+      title: updated.title,
+      dueDate: updated.dueDate,
+      priority: updated.priority,
+    });
+    setTasks(tasks.map((task) => (task.id === updated.id ? { ...task, ...updated } : task)));
+    setIsEditModalOpen(false);
+    setEditTask(null);
+  };
 
   return (
     <div className="min-h-screen bg-[#032934] text-[#F5E8C2] flex flex-col">
@@ -90,7 +112,12 @@ export default function Home() {
 
       <main className="flex-1 container mx-auto p-4 md:p-6">
         <div className="grid grid-cols-1 gap-6 max-w-4xl mx-auto">
-          <TaskList tasks={tasks} onToggleCompletion={toggleTaskCompletion} />
+          <TaskList
+            tasks={tasks}
+            onToggleCompletion={toggleTaskCompletion}
+            onDelete={deleteTask}
+            onEdit={handleEditTask}
+          />
         </div>
       </main>
 
@@ -98,7 +125,22 @@ export default function Home() {
       <ChatButton onClick={() => setIsChatModalOpen(true)} />
 
       <AddTaskModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onAddTask={addTask} />
+      {/* Edit Task Modal - reuse AddTaskModal with prefilled values */}
+      {editTask && (
+        <AddTaskModal
+          isOpen={isEditModalOpen}
+          onClose={() => {
+            setIsEditModalOpen(false);
+            setEditTask(null);
+          }}
+          onAddTask={(data) => updateTask({ ...data, id: editTask.id })}
+          key={editTask.id}
+          // @ts-ignore
+          initialValues={editTask}
+        />
+      )}
       <ChatModal isOpen={isChatModalOpen} onClose={() => setIsChatModalOpen(false)} />
     </div>
   )
 }
+

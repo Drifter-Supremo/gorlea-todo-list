@@ -9,9 +9,11 @@ import type { Task } from "@/lib/types"
 interface TaskListProps {
   tasks: Task[]
   onToggleCompletion: (id: string) => void
+  onDelete: (id: string) => void
+  onEdit: (task: Task) => void
 }
 
-export function TaskList({ tasks, onToggleCompletion }: TaskListProps) {
+export function TaskList({ tasks, onToggleCompletion, onDelete, onEdit }: TaskListProps) {
   const incompleteTasks = tasks.filter((task) => !task.completed)
   const completedTasks = tasks.filter((task) => task.completed)
 
@@ -35,7 +37,7 @@ export function TaskList({ tasks, onToggleCompletion }: TaskListProps) {
                   <h3 className="text-sm font-medium text-[#F5E8C2]/70">To Do</h3>
                   <div className="space-y-2">
                     {sortedIncompleteTasks.map((task) => (
-                      <TaskRow key={task.id} task={task} onToggleCompletion={onToggleCompletion} />
+                      <TaskRow key={task.id} task={task} onToggleCompletion={onToggleCompletion} onDelete={onDelete} onEdit={onEdit} />
                     ))}
                   </div>
                 </div>
@@ -47,7 +49,7 @@ export function TaskList({ tasks, onToggleCompletion }: TaskListProps) {
                   <h3 className="text-sm font-medium text-[#F5E8C2]/70">Completed</h3>
                   <div className="space-y-2 opacity-70">
                     {completedTasks.map((task) => (
-                      <TaskRow key={task.id} task={task} onToggleCompletion={onToggleCompletion} />
+                      <TaskRow key={task.id} task={task} onToggleCompletion={onToggleCompletion} onDelete={onDelete} onEdit={onEdit} />
                     ))}
                   </div>
                 </div>
