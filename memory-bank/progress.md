@@ -6,11 +6,14 @@
 - MVP roadmap and technical requirements are clearly defined.
 - Initial project structure and planning are complete.
 - Environment and secrets setup complete.
+- All core dependencies installed (Firebase, Google OAuth, Gemini, date-fns).
+- Firebase initialized (lib/firebase.ts).
+- Authentication hook implemented (hooks/useAuth.tsx).
 
 ## What's Left to Build
 
 
-- Bootstrap Firebase and authentication modules.
+- Wire authentication to UI (next)
 - Implement Firestore CRUD helpers and connect to UI components.
 - Integrate Gemini AI parsing for natural language task input.
 - Establish daily email digest functionality.
@@ -20,6 +23,7 @@
 ## Current Status
 
 - Phase 0 completed: environment and secrets configured.
+- Dependencies installed; Phase 1 underway.
 - Project in Phase 1: Firebase integration underway.
 - Memory Bank updated; proceeding with core implementation.
 

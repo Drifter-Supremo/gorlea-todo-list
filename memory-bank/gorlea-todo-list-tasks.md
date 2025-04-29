@@ -76,15 +76,15 @@ Phase 1 – Client‑Side Firebase Bootstrap
 
   
 
-[ ] 1.1 pnpm add firebase @react-oauth/google @google/generative-ai date-fns
+[x] 1.1 npm install firebase @react-oauth/google @google/generative-ai date-fns --legacy-peer-deps
 
   
 
-[ ] 1.2 Create src/lib/firebase.ts — export app, auth, db
+[x] 1.2 Create lib/firebase.ts — export app, auth, db
 
   
 
-[ ] 1.3 Create src/hooks/useAuth.tsx — wrap onAuthStateChanged, expose login() / logout()
+[x] 1.3 Create hooks/useAuth.tsx — wrap onAuthStateChanged, expose login() / logout()
 
   
 
