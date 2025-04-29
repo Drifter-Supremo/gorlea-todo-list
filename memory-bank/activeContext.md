@@ -2,25 +2,22 @@
 
 ## Current Work Focus
 
-- Initial project setup and documentation.
-- Scaffolding core Memory Bank files for project continuity.
-- Preparing for Firebase integration and environment configuration.
+- Integrating Gemini AI parsing (Phase 3) for natural language task input.
+- All core CRUD, time picker, and mobile/desktop UX features are complete.
+- Documentation and memory bank are kept fully up to date for handoff.
 
 ## Recent Changes
 
-- Created foundational documentation (projectbrief.md, productContext.md).
-- Outlined MVP roadmap and technical requirements.
-- Began Memory Bank initialization process.
+- Completed all Phase 2 features: Firestore CRUD helpers, per-user storage, add/edit modal with time picker, mobile long-press actions, edit/delete improvements, minimal confirmation dialogs.
+- All features committed and pushed to main branch.
+- Documentation and MVP checklist updated.
 
 ## Next Steps
 
-1. Complete Memory Bank scaffolding (systemPatterns.md, techContext.md, progress.md).
-2. Set up environment variables and secrets as per MVP checklist.
-3. Bootstrap Firebase and authentication modules.
-4. Implement Firestore CRUD helpers and connect to UI components.
-5. Integrate Gemini AI parsing and connect to task creation flow.
-6. Establish daily email digest functionality.
-7. Prepare for deployment and production testing.
+1. Integrate Gemini AI parsing and connect to task creation flow (Phase 3).
+2. Establish daily email digest functionality.
+3. Prepare for deployment and production testing.
+4. Continue updating documentation and memory bank for seamless AI and human handoff.
 
 ## Active Decisions & Considerations
 

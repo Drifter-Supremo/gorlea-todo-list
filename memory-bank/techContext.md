@@ -37,6 +37,9 @@
 
 ## Integration Notes
 
+- Project is currently in Phase 3: Gemini AI parsing integration.
+- All Firestore CRUD, time picker, mobile/desktop UX, and edit/delete features are complete and live in main branch.
+- Documentation and memory bank files are up to date for AI or new developer handoff.
 - Firebase and Gemini API keys must be set in environment variables.
 - Firestore is the single source of truth for tasks.
 - AI parsing is handled via a dedicated Firebase Cloud Function.

@@ -15,11 +15,13 @@ Gorlea Tasks was created to address the need for a smarter, more intuitive task 
 ## How It Should Work
 
 - Users enter tasks in natural language (e.g., "Call John tomorrow at 2 PM").
-- The system parses and extracts details like due dates, priorities, and categories automatically.
+- The system parses and extracts details like due dates, priorities, and categories automatically (Phase 3, in progress).
 - An integrated AI assistant (Gorlea) helps with task management, suggestions, and productivity queries.
 - Tasks are categorized and prioritized intelligently.
 - The UI is minimal, responsive, and supports both light and dark modes.
 - Tasks sync seamlessly across devices and work offline.
+- All Firestore CRUD, time picker, mobile/desktop UX, and edit/delete features are complete and live.
+- Documentation/memory bank is up to date for AI or developer handoff.
 
 ## User Experience Goals
 

@@ -129,11 +129,13 @@ Phase 1.5 – Styling Tokens
 Phase 2 – Firestore CRUD Helpers
 
 [x] 2.1 Firestore CRUD helpers implemented in lib/firestore.ts (addTask, getTasks, updateTask, deleteTask). All now use per-user subcollections: tasks are stored under users/{userId}/tasks.
-
 [x] 2.2 Frontend updated to use helpers and fetch only the signed-in user's tasks. Verified: logging in/out with different accounts shows only that user's tasks.
-
 [x] 2.3 Update task-row.tsx checkbox to call toggleComplete
     - (Implemented via parent handler: toggling the checkbox updates Firestore for the current user. This follows React best practices.)
+[x] 2.4 Add/Edit Task modal: time picker (15-min increments, mobile/desktop friendly)
+[x] 2.5 Mobile long-press on task row opens modal with Edit/Delete actions
+[x] 2.6 Minimal delete confirmation dialog (all devices)
+[x] 2.7 Edit modal improvements: pre-filling, unified for add/edit
 
 _Note: listenTasks (real-time) not yet implemented; currently using getTasks for one-time fetch. Multi-user storage is complete and tested as of 2025-04-29._
 

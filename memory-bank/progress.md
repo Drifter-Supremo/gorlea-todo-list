@@ -9,6 +9,13 @@
 - All core dependencies installed (Firebase, Google OAuth, Gemini, date-fns).
 - Firebase initialized (lib/firebase.ts).
 - Authentication hook implemented (hooks/useAuth.tsx).
+- Firestore CRUD helpers fully implemented and integrated with UI.
+- Add/Edit Task modal supports time picker (15-min increments, mobile/desktop friendly).
+- Mobile long-press gesture on task rows opens centered modal for Edit/Delete.
+- Desktop/tablet: edit/delete icons always visible for quick access.
+- Minimal delete confirmation dialog (all devices).
+- Edit modal improvements: pre-filling, unified for add/edit.
+- All changes tested and committed/pushed to repo.
 
 ## What's Left to Build
 
@@ -16,21 +23,18 @@
 - Authentication wired to UI (app-bar.tsx).
 - Tailwind color variables added (globals.css).
 - UI ready for further color refactoring if desired.
-- Implement Firestore CRUD helpers and connect to UI components.
 - Integrate Gemini AI parsing for natural language task input.
 - Establish daily email digest functionality.
 - Prepare for deployment to Vercel and production testing.
-- Implement future enhancements: task filtering, editing, deletion, categories, calendar view, notifications, advanced AI features.
+- Implement future enhancements: task filtering, description/details field, categories, calendar view, notifications, advanced AI features.
 
 ## Current Status
 
-- Phase 0 completed: environment and secrets configured.
-- Dependencies installed; Phase 1 underway.
-- Project in Phase 1: Firebase integration underway.
-- Memory Bank updated; proceeding with core implementation.
+- Project is now in Phase 3: Gemini AI parsing integration (Cloud Function, natural language task input).
+- All Phase 2 features (Firestore CRUD, time picker, mobile/desktop UX, edit/delete) are complete and live in main branch.
+- Documentation and memory bank are fully up to date for AI or developer handoff.
 
 ## Known Issues
 
-- Firebase initialization and authentication not yet wired.
-- Firebase and Gemini integration pending.
+- Gemini integration pending (Phase 3, in progress).
 - No deployed version available yet.

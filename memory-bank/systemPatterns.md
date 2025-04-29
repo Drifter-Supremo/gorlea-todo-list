@@ -6,7 +6,9 @@
 - **Styling:** Tailwind CSS for utility-first styling; shadcn/ui for reusable UI components.
 - **State Management:** React state and context for UI state; Firebase for persistent data.
 - **Backend/Cloud:** Firebase (Firestore, Auth, Functions) for real-time data, authentication, and serverless logic.
-- **AI Integration:** Gemini 2.0 Flash via Google Generative AI for natural language task parsing and assistant features.
+- **AI Integration:** Gemini 2.0 Flash via Google Generative AI for natural language task parsing and assistant features (Phase 3, in progress).
+- **All CRUD, time picker, mobile/desktop UX, and edit/delete features are complete and live.**
+- **Documentation/memory bank is up to date for AI or developer handoff.**
 
 ## Key Technical Decisions
 
