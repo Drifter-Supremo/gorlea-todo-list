@@ -18,6 +18,20 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 
 export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowProps) {
+  // Long-press state
+  const [showActionModal, setShowActionModal] = useState(false)
+  let longPressTimer: number | null = null
+
+  // Long-press handlers
+  const handleTouchStart = () => {
+    longPressTimer = window.setTimeout(() => setShowActionModal(true), 500)
+  }
+  const handleTouchEnd = () => {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer)
+      longPressTimer = null
+    }
+  }
   // Format the due date
   const formatDueDate = (date: Date) => {
     if (isToday(date)) {
@@ -51,7 +65,12 @@ export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowP
 
   return (
     <>
-      <div className="flex items-center space-x-3 p-3 rounded-md bg-[#032934] border border-[#F5E8C2]/10 hover:border-[#F5E8C2]/20 transition-colors">
+      <div
+        className="flex items-center space-x-3 p-3 rounded-md bg-[#032934] border border-[#F5E8C2]/10 hover:border-[#F5E8C2]/20 transition-colors"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
+      >
       <Checkbox
         checked={task.completed}
         onCheckedChange={() => onToggleCompletion(task.id)}
@@ -82,6 +101,19 @@ export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowP
         <Trash className="w-4 h-4" />
       </button>
     </div>
+
+      {/* Long-press Action Modal */}
+      <Dialog open={showActionModal} onOpenChange={setShowActionModal}>
+        <DialogContent className="bg-[#032934] text-[#F5E8C2] border-[#F5E8C2]/20 max-w-xs">
+          <DialogHeader>
+            <DialogTitle className="text-[#F29600] text-center">Task Actions</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-3 py-2">
+            <Button onClick={() => { setShowActionModal(false); onEdit(task); }} className="bg-[#F29600] hover:bg-[#F29600]/90 text-[#032934]">Edit</Button>
+            <Button onClick={() => { setShowActionModal(false); setShowDeleteDialog(true); }} variant="destructive" className="bg-red-600 hover:bg-red-700">Delete</Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
