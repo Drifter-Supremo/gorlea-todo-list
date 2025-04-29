@@ -20,17 +20,44 @@ interface AddTaskModalProps {
   initialValues?: Partial<Omit<Task, "completed">>
 }
 
+function generateTimeOptions() {
+  const options = []
+  for (let h = 0; h < 24; h++) {
+    for (let m = 0; m < 60; m += 15) {
+      const hour = ((h + 11) % 12) + 1
+      const ampm = h < 12 ? "AM" : "PM"
+      const label = `${hour}:${m.toString().padStart(2, "0")} ${ampm}`
+      options.push({
+        value: `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`,
+        label,
+      })
+    }
+  }
+  return options
+}
+
 export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddTaskModalProps) {
   const [title, setTitle] = useState(initialValues?.title || "")
   const [dueDate, setDueDate] = useState<Date>(initialValues?.dueDate ? new Date(initialValues.dueDate) : new Date())
   const [priority, setPriority] = useState<Task["priority"]>(initialValues?.priority || "medium")
+  // Time picker state (default to 09:00 AM if adding, or extract from dueDate if editing)
+  const initialTime = initialValues?.dueDate
+    ? `${new Date(initialValues.dueDate).getHours().toString().padStart(2, "0")}:${new Date(initialValues.dueDate).getMinutes().toString().padStart(2, "0")}`
+    : "09:00"
+  const [time, setTime] = useState(initialTime)
+  const timeOptions = generateTimeOptions()
 
   const handleSubmit = () => {
     if (!title.trim()) return
 
+    // Combine dueDate and time
+    const [hours, minutes] = time.split(":").map(Number)
+    const due = new Date(dueDate)
+    due.setHours(hours, minutes, 0, 0)
+
     onAddTask({
       title: title.trim(),
-      dueDate,
+      dueDate: due,
       priority,
     })
 
@@ -39,6 +66,7 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
       setTitle("")
       setDueDate(new Date())
       setPriority("medium")
+      setTime("09:00")
     }
   }
 
@@ -65,7 +93,7 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
             />
           </div>
 
-          <div className="grid gap-2">
+           <div className="grid gap-2">
             <Label className="text-[#F5E8C2]">Due Date</Label>
             <Popover>
               <PopoverTrigger asChild>
@@ -90,6 +118,25 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
                 />
               </PopoverContent>
             </Popover>
+          </div>
+
+          {/* Time Picker */}
+          <div className="grid gap-2">
+            <Label htmlFor="time" className="text-[#F5E8C2]">
+              Time
+            </Label>
+            <Select value={time} onValueChange={setTime}>
+              <SelectTrigger id="time" className="bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus:ring-[#F29600]">
+                <SelectValue placeholder="Select time" />
+              </SelectTrigger>
+              <SelectContent className="bg-[#032934] border-[#F5E8C2]/20 max-h-60 overflow-y-auto">
+                {timeOptions.map((opt) => (
+                  <SelectItem key={opt.value} value={opt.value} className="text-[#F5E8C2] focus:bg-[#F29600]/20">
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="grid gap-2">
