@@ -5,10 +5,11 @@
 - Project documentation (projectbrief.md, productContext.md, activeContext.md, systemPatterns.md, techContext.md) is scaffolded.
 - MVP roadmap and technical requirements are clearly defined.
 - Initial project structure and planning are complete.
+- Environment and secrets setup complete.
 
 ## What's Left to Build
 
-- Complete environment and secrets setup (.env.local, Firebase, Gemini API keys).
+
 - Bootstrap Firebase and authentication modules.
 - Implement Firestore CRUD helpers and connect to UI components.
 - Integrate Gemini AI parsing for natural language task input.
@@ -18,12 +19,12 @@
 
 ## Current Status
 
-- Memory Bank initialization in progress.
-- Project is in early development/setup phase.
-- Preparing for Firebase integration and core feature implementation.
+- Phase 0 completed: environment and secrets configured.
+- Project in Phase 1: Firebase integration underway.
+- Memory Bank updated; proceeding with core implementation.
 
 ## Known Issues
 
-- Environment variables and secrets not yet configured.
+- Firebase initialization and authentication not yet wired.
 - Firebase and Gemini integration pending.
 - No deployed version available yet.

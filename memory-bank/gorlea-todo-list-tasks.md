@@ -1,4 +1,4 @@
-﻿Gorlea Tasks — MVP Roadmap
+Gorlea Tasks — MVP Roadmap
 
   
 
@@ -22,11 +22,11 @@ Phase 0 – Project & Secrets Setup
 
   
 
-[ ] 0.1 Create/clean repo & branch
+[x] 0.1 Create/clean repo & branch
 
   
 
-[ ] 0.2 Add .env.local with keys:
+[x] 0.2 Add .env.local with keys:
 
   
 
@@ -56,11 +56,11 @@ GEMINI_API_KEY=
 
   
 
-[ ] 0.3 Add .env.local & credentials.txt to .gitignore, then delete credentials.txt
+[x] 0.3 Add .env.local & credentials.txt to .gitignore, then delete credentials.txt
 
   
 
-[ ] 0.4 Commit → chore: move secrets to env
+[x] 0.4 Commit → chore: move secrets to env
 
   
 

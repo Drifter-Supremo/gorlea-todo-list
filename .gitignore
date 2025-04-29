@@ -18,6 +18,10 @@ yarn-error.log*
 
 # env files
 .env*
+# Ignore local environment and credentials
+.env.local
+credentials.txt
+.env
 
 # vercel
 .vercel
