@@ -88,7 +88,7 @@ Phase 1 – Client‑Side Firebase Bootstrap
 
   
 
-[ ] 1.4 Wire app-bar.tsx to display user avatar & Google sign‑in/out buttons
+[x] 1.4 Wire app-bar.tsx to display user avatar & Google sign‑in/out buttons
 
   
 
