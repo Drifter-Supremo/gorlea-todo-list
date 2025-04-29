@@ -4,10 +4,12 @@
 
 - Integrating Gemini AI parsing (Phase 3) for natural language task input.
 - All core CRUD, time picker, and mobile/desktop UX features are complete.
+- Task cards now support a title and a details/description field, with truncation and a responsive details modal.
 - Documentation and memory bank are kept fully up to date for handoff.
 
 ## Recent Changes
 
+- Task cards updated: support for description/details field, title truncation, and modal with full details and edit controls (responsive for mobile/desktop).
 - Completed all Phase 2 features: Firestore CRUD helpers, per-user storage, add/edit modal with time picker, mobile long-press actions, edit/delete improvements, minimal confirmation dialogs.
 - All features committed and pushed to main branch.
 - Documentation and MVP checklist updated.

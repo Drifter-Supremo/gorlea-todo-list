@@ -17,6 +17,7 @@ import {
 export interface Task {
   id?: string;
   title: string;
+  description: string;
   dueDate: Date;
   completed: boolean;
   priority: "low" | "medium" | "high";
@@ -27,6 +28,7 @@ export async function addTask(userId: string, task: Omit<Task, "id">): Promise<D
   return await addDoc(collection(db, "users", userId, "tasks"), {
     ...task,
     dueDate: Timestamp.fromDate(task.dueDate),
+    description: task.description,
   });
 }
 
@@ -39,6 +41,7 @@ export async function getTasks(userId: string): Promise<Task[]> {
     return {
       id: docSnap.id,
       title: data.title,
+      description: data.description || "",
       dueDate: (data.dueDate && data.dueDate.toDate) ? data.dueDate.toDate() : new Date(data.dueDate),
       completed: data.completed,
       priority: data.priority,
@@ -53,6 +56,9 @@ export async function updateTask(userId: string, id: string, updates: Partial<Om
   const firestoreUpdates: Record<string, any> = { ...updates };
   if (updates.dueDate instanceof Date) {
     firestoreUpdates.dueDate = Timestamp.fromDate(updates.dueDate);
+  }
+  if (updates.description !== undefined) {
+    firestoreUpdates.description = updates.description;
   }
   await updateDoc(taskRef, firestoreUpdates);
 }

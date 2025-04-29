@@ -38,6 +38,7 @@ function generateTimeOptions() {
 
 export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddTaskModalProps) {
   const [title, setTitle] = useState(initialValues?.title || "")
+  const [description, setDescription] = useState(initialValues?.description || "")
   const [dueDate, setDueDate] = useState<Date>(initialValues?.dueDate ? new Date(initialValues.dueDate) : new Date())
   const [priority, setPriority] = useState<Task["priority"]>(initialValues?.priority || "medium")
   // Time picker state (default to 09:00 AM if adding, or extract from dueDate if editing)
@@ -57,6 +58,7 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
 
     onAddTask({
       title: title.trim(),
+      description: description.trim(),
       dueDate: due,
       priority,
     })
@@ -64,6 +66,7 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
     // Reset form only if adding (not editing)
     if (!initialValues) {
       setTitle("")
+      setDescription("")
       setDueDate(new Date())
       setPriority("medium")
       setTime("09:00")
@@ -90,6 +93,19 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus-visible:ring-[#F29600]"
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="description" className="text-[#F5E8C2]">
+              Details / Description
+            </Label>
+            <Textarea
+              id="description"
+              placeholder="Add more details (optional)"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus-visible:ring-[#F29600]"
+              rows={3}
             />
           </div>
 

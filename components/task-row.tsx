@@ -62,41 +62,37 @@ export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowP
   }
 
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [showDetailsModal, setShowDetailsModal] = useState(false)
 
   return (
     <>
       <div
-        className="flex items-center space-x-3 p-3 rounded-md bg-[#032934] border border-[#F5E8C2]/10 hover:border-[#F5E8C2]/20 transition-colors"
+        className="flex items-center space-x-3 p-3 rounded-md bg-[#032934] border border-[#F5E8C2]/10 hover:border-[#F5E8C2]/20 transition-colors cursor-pointer"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
+        onClick={() => setShowDetailsModal(true)}
       >
       <Checkbox
         checked={task.completed}
         onCheckedChange={() => onToggleCompletion(task.id)}
         className="border-[#F29600] data-[state=checked]:bg-[#F29600] data-[state=checked]:text-[#032934]"
+        onClick={e => e.stopPropagation()}
       />
       <div className="flex-1 min-w-0">
         <p
           className={`text-sm font-medium truncate ${task.completed ? "line-through text-[#F5E8C2]/50" : "text-[#F5E8C2]"}`}
         >
-          {task.title}
+          {task.title.length > 32 ? task.title.slice(0, 32) + "..." : task.title}
         </p>
       </div>
       <Badge variant={getBadgeVariant() as any} className="ml-auto">
         {formatDueDate(task.dueDate)}
       </Badge>
       <button
-        title="Edit Task"
-        className="ml-2 p-1 rounded hover:bg-[#F29600]/20 text-[#F5E8C2]"
-        onClick={() => onEdit(task)}
-      >
-        <Edit2 className="w-4 h-4" />
-      </button>
-      <button
         title="Delete Task"
         className="ml-1 p-1 rounded hover:bg-red-600/20 text-[#F5E8C2]"
-        onClick={() => setShowDeleteDialog(true)}
+        onClick={e => { e.stopPropagation(); setShowDeleteDialog(true); }}
       >
         <Trash className="w-4 h-4" />
       </button>
@@ -128,7 +124,43 @@ export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowP
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      {/* Details Modal */}
+      <Dialog open={showDetailsModal} onOpenChange={setShowDetailsModal}>
+        <DialogContent className="bg-[#032934] text-[#F5E8C2] border-[#F5E8C2]/20 max-w-md w-full">
+          <DialogHeader>
+            <DialogTitle className="text-[#F29600]">Task Details</DialogTitle>
+          </DialogHeader>
+          <div className="py-2">
+            <div className="mb-2">
+              <span className="font-semibold text-[#F29600]">Due:</span>{" "}
+              {format(task.dueDate, "PPP p")}
+            </div>
+            <div className="mb-2">
+              <span className="font-semibold text-[#F29600]">Priority:</span>{" "}
+              {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+            </div>
+            <div>
+              <span className="font-semibold text-[#F29600]">Details</span>
+              <div className="whitespace-pre-line mt-1">{task.description || <span className="italic text-[#F5E8C2]/60">No details</span>}</div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              className="bg-[#F29600] hover:bg-[#F29600]/90 text-[#032934]"
+              onClick={() => { setShowDetailsModal(false); onEdit(task); }}
+            >
+              Edit Task
+            </Button>
+            <Button
+              variant="ghost"
+              className="text-[#F5E8C2]"
+              onClick={() => setShowDetailsModal(false)}
+            >
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }
-
