@@ -14,7 +14,8 @@
 
 
 - Authentication wired to UI (app-bar.tsx).
-- Next: Add styling tokens (Tailwind variables).
+- Tailwind color variables added (globals.css).
+- UI ready for further color refactoring if desired.
 - Implement Firestore CRUD helpers and connect to UI components.
 - Integrate Gemini AI parsing for natural language task input.
 - Establish daily email digest functionality.

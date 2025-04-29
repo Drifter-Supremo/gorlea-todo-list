@@ -98,7 +98,7 @@ Phase 1.5 – Styling Tokens
 
   
 
-[ ] 1.5.1 Add Tailwind variables to globals.css:
+[x] 1.5.1 Add Tailwind variables to globals.css:
 
   
 
