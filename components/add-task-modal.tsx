@@ -10,8 +10,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
-import { cn } from "../src/lib/utils"
-import type { Task, TaskInput } from "../src/lib/types"
+import { cn } from "@lib/utils"
+import type { Task, TaskInput } from "@lib/types"
 
 interface AddTaskModalProps {
   isOpen: boolean

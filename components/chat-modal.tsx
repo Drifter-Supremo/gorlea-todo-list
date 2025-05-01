@@ -1,9 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { parseTask } from "../src/lib/parseTask"
 import { addTask } from "../src/lib/firestore"
-import { nanoid } from "nanoid"
 import { toast } from "./ui/use-toast"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog"
 import { Button } from "./ui/button"
@@ -54,16 +52,64 @@ export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
 
   const handleSend = async () => {
     if (!input.trim()) return
-    const parsed = await parseTask(input)
-    await addTask({
-      title: parsed.title,
-      details: parsed.details,
-      dueDate: parsed.dueDate ? new Date(parsed.dueDate) : null,
-      priority: parsed.priority
-    })
-    toast({ title: "✅ Task added!" })
-    onClose()
-    if (refreshTasks) refreshTasks()
+    
+    // Add user message to chat
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      content: input,
+      sender: "user",
+      timestamp: new Date(),
+    }
+    setMessages(prev => [...prev, userMessage])
+    
+    try {
+      // Call API route to parse task
+      const response = await fetch('/api/ai/parse', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ input }),
+      })
+      
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`)
+      }
+      
+      const parsedTask = await response.json()
+      
+      // Add AI response to chat
+      const aiMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        content: `I've created a task: "${parsedTask.title}"`,
+        sender: "ai",
+        timestamp: new Date(),
+      }
+      setMessages(prev => [...prev, aiMessage])
+      
+      // Add the task to Firestore
+      await addTask({
+        title: parsedTask.title,
+        details: parsedTask.details,
+        dueDate: parsedTask.dueDate ? new Date(parsedTask.dueDate) : null,
+        priority: parsedTask.priority || "medium"
+      })
+      
+      toast({ title: "✅ Task added!" })
+      onClose()
+      if (refreshTasks) refreshTasks()
+    } catch (error) {
+      console.error('Error processing task:', error)
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        content: "Sorry, there was an error processing your request. Please try again.",
+        sender: "ai",
+        timestamp: new Date(),
+      }
+      setMessages(prev => [...prev, errorMessage])
+      toast({ title: "Error", description: "Failed to add task", variant: "destructive" })
+    }
+    
     setInput("")
   }
 

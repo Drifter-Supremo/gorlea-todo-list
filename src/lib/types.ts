@@ -7,4 +7,11 @@ export interface Task {
   completed: boolean
 }
 
-export type TaskInput = Omit<Task, "id" | "completed">
+export type TaskInput = Omit<Task, "id" | "completed">;
+
+export interface ParsedTask {
+  title: string;
+  details: string;
+  dueDate?: string | null;
+  priority?: string;
+}
