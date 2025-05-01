@@ -6,7 +6,7 @@
 - **Styling:** Tailwind CSS for utility-first styling; shadcn/ui for reusable UI components.
 - **State Management:** React state and context for UI state; Firebase for persistent data.
 - **Backend/Cloud:** Firebase (Firestore, Auth, Functions) for real-time data, authentication, and serverless logic.
-- **AI Integration:** Gemini 2.0 Flash via Google Generative AI for natural language task parsing and assistant features (Phase 3, in progress).
+- **AI Integration:** Gemini 2.0 Flash via Google Generative AI for natural language task parsing and assistant features (Phase 3, facing 500 errors during real integration).
 - **All CRUD, time picker, mobile/desktop UX, and edit/delete features are complete and live.**
 - **Task cards: on mobile, only title and due date are shown; delete icon is hidden for clarity.**
 - **Details modal for editing and viewing full info; long-press on mobile shows only delete.**
@@ -19,7 +19,7 @@
 - Modular component structure for maintainability and scalability.
 - Integration of shadcn/ui for consistent, accessible UI patterns.
 - Firebase chosen for real-time sync, authentication, and serverless functions.
-- AI parsing handled via a dedicated Cloud Function, returning structured JSON for task creation.
+- AI parsing handled via a dedicated endpoint in 'app/api/ai/parse/route.ts', currently using a mock setup due to integration issues with Gemini API.
 - Progressive Web App (PWA) support for offline functionality and installability.
 
 ## Design Patterns
@@ -32,7 +32,7 @@
 
 ## Component Relationships
 
-- **app-bar.tsx:** Top-level navigation and user controls.
+- **app-bar.tsx:** Top-level navigation and user controls, now correctly displaying profile pictures after resolution.
 - **add-task-button.tsx / add-task-modal.tsx:** Entry point for new tasks, integrates AI parsing. "Details" field replaces "Description."
 - **task-list.tsx / task-row.tsx:** Display and manage tasks, connected to Firestore. On mobile, only title and due date are shown; delete icon hidden.
 - **chat-button.tsx / chat-modal.tsx:** Access Gorlea AI assistant.

@@ -2,30 +2,27 @@
 
 ## Current Work Focus
 
-- Integrating AI parsing for natural language task input via a mock endpoint.
-- Resolving runtime errors related to invalid due date values in task rendering.
-- Ensuring all components use relative import paths to avoid "Cannot find module" errors.
-- Updating documentation and memory bank for seamless handoff and continuity.
+- Attempting integration of Gemini API for natural language task input parsing, currently facing persistent 500 errors.
+- Resolving UI issues such as task persistence after logout and profile picture display in the app bar.
+- Updating documentation and memory bank to reflect all recent changes and troubleshooting efforts for continuity.
 
 ## Recent Changes
 
-- Fixed "Invalid time value" error in 'components/task-row.tsx' by adding checks for invalid due dates.
-- Created mock API endpoint '/api/ai/parse' to simulate AI parsing for chat input, extracting title, details, due date, and priority based on natural language cues.
-- Updated 'src/lib/parseTask.ts' to send proper POST requests to the mock endpoint.
-- Enhanced 'src/components/chat-modal.tsx' with state management and error handling for AI task creation.
-- Converted alias imports to relative paths across multiple components to resolve module resolution errors.
-- Updated 'src/lib/firestore.ts' to handle due date conversion from Firestore Timestamps to JavaScript Date objects.
+- Attempted multiple configurations for Gemini API integration in 'app/api/ai/parse/route.ts', including endpoint variations and API key naming adjustments (checked both `NEXT_PUBLIC_GEMINI_KEY` and `GEMINI_API_KEY`).
+- Fixed task persistence after logout in 'app/page.tsx' by clearing the tasks state when no user is logged in, ensuring the "no tasks yet" state is displayed.
+- Investigated and resolved profile picture display issue in 'components/app-bar.tsx', confirming it now works correctly after user feedback.
+- Enhanced error logging in API endpoint to provide detailed responses for debugging Gemini integration issues.
 
 ## Next Steps
 
-1. Implement actual AI logic using Gemini API for natural language parsing in '/api/ai/parse'.
-2. Test the full task creation flow via AI chat to ensure seamless integration.
-3. Address any remaining "Cannot find module" errors by verifying TypeScript cache and IDE settings.
-4. Continue updating documentation for all changes and ensure memory bank reflects the latest state.
+1. Continue troubleshooting Gemini API integration by analyzing detailed error responses from the network tab or server logs to resolve 500 errors.
+2. Revisit AI parsing integration once UI issues are fully resolved, potentially exploring alternative AI services if Gemini issues persist.
+3. Test the full task creation flow via AI chat once the real API integration is successful.
+4. Ensure all memory bank files are kept up-to-date with the latest state and troubleshooting outcomes for seamless handoff.
 
 ## Active Decisions & Considerations
 
-- Prioritize mock implementation for AI parsing to ensure functionality before real API integration.
-- Maintain consistent use of relative paths for imports to avoid alias resolution issues.
-- Focus on robust error handling for date values and API calls to prevent white screen errors.
-- Keep documentation up-to-date for smooth AI and human handoff.
+- Prioritize resolving UI issues (task persistence, profile picture) before finalizing AI integration to ensure a stable user experience.
+- Maintain detailed error logging in API responses to aid in debugging without direct terminal access.
+- Focus on user feedback to confirm fixes (e.g., profile picture now displaying correctly) before proceeding to next phases.
+- Keep documentation consistent with project style and updated with all session outcomes for future reference.

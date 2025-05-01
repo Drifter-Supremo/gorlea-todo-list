@@ -11,14 +11,14 @@
 - **Lucide React**: Icon library for consistent UI icons.
 - **Firebase**: Firestore (database), Auth (authentication), Functions (serverless logic), and Extensions (email triggers).
 - **@google/generative-ai**: Gemini 2.0 Flash for AI-powered task parsing and assistant features.
-- **pnpm**: Preferred package manager for dependency management.
+- **npm**: Package manager for dependency management.
 
 ## Development Setup
 
 - Node.js 18.17.0 or later required.
-- Install dependencies with `pnpm install`.
+- Install dependencies with `npm install`.
 - Environment variables managed via `.env.local` (see MVP checklist for required keys).
-- Local development with `pnpm run dev`.
+- Local development with `npm run dev`.
 - Firebase emulators for local testing of Firestore and Functions.
 - Deployment via Vercel for production hosting.
 - Task cards: only title and due date shown on mobile, delete icon hidden for cleaner look.
@@ -36,14 +36,14 @@
 ## Dependencies
 
 - See `package.json` for full list.
-- Key dependencies: next, react, typescript, tailwindcss, shadcn/ui, firebase, @google/generative-ai, date-fns, lucide-react, pnpm.
+- Key dependencies: next, react, typescript, tailwindcss, shadcn/ui, firebase, @google/generative-ai, date-fns, lucide-react.
 
 ## Integration Notes
 
-- Project is currently in Phase 3: Gemini AI parsing integration.
+- Project is currently in Phase 3: Gemini AI parsing integration, facing persistent 500 errors during real API integration attempts.
 - All Firestore CRUD, time picker, mobile/desktop UX, and edit/delete features are complete and live in main branch.
 - Documentation and memory bank files are up to date for AI or new developer handoff.
-- Firebase and Gemini API keys must be set in environment variables.
+- Firebase and Gemini API keys must be set in environment variables, checking both `NEXT_PUBLIC_GEMINI_KEY` and `GEMINI_API_KEY`.
 - Firestore is the single source of truth for tasks.
-- AI parsing is handled via a dedicated Firebase Cloud Function.
+- AI parsing is handled via a dedicated endpoint in 'app/api/ai/parse/route.ts', currently using a mock setup due to integration issues.
 - Email notifications use Firebase Extensions or custom Cloud Functions.

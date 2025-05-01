@@ -61,7 +61,7 @@ gorlea-tasks/
 ### Prerequisites
 
 - Node.js 18.17.0 or later
-- npm, yarn, or pnpm
+- npm
 
 ## Future Enhancements
 
@@ -82,3 +82,17 @@ gorlea-tasks/
 ```bash
 git clone https://github.com/yourusername/gorlea-tasks.git
 cd gorlea-tasks
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Set up environment variables in `.env.local` with necessary Firebase and Gemini API keys.
+
+4. Run the development server:
+
+```bash
+npm run dev

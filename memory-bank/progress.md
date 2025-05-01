@@ -19,37 +19,41 @@
 - Fixed "Invalid time value" error in task rendering by handling invalid due dates.
 - Created mock API endpoint for AI parsing, simulating natural language task input processing.
 - Updated chat modal with state management and error handling for task creation via AI.
+- Fixed task persistence after logout by clearing tasks state when no user is logged in.
+- Resolved profile picture display issue in app bar, confirmed working after user feedback.
 - All changes tested and committed/pushed to repo.
 
 ## What's Left to Build
 
-- Integrate Gemini AI parsing for natural language task input with real API calls.
+- Integrate Gemini AI parsing for natural language task input with real API calls, currently facing 500 errors during integration attempts.
 - Establish daily email digest functionality.
 - Prepare for deployment to Vercel and production testing.
 - Implement future enhancements: task filtering, categories, calendar view, notifications, advanced AI features.
 
 ## Current Status
 
-- Project is now in Phase 3: Gemini AI parsing integration (mock endpoint created, real integration pending).
+- Project is in Phase 3: Gemini AI parsing integration (mock endpoint in place, real integration facing persistent 500 errors).
 - All Phase 2 features (Firestore CRUD, time picker, mobile/desktop UX, edit/delete) are complete and live in main branch.
-- Fixed runtime errors related to invalid due dates, ensuring app loads without white screen.
+- UI issues (task persistence after logout, profile picture display) have been resolved and confirmed working.
 - Documentation and memory bank files are up to date for AI or new developer handoff.
 
 ## Known Issues
 
-- Gemini integration pending (Phase 3, currently using mock endpoint).
+- Gemini API integration is incomplete due to persistent 500 errors, requiring further debugging with detailed error responses or server logs.
 - No deployed version available yet.
 - Some "Cannot find module" errors may persist due to TypeScript cache or IDE issues, resolvable by restart or cache clearing.
 
 ## May 2025
 
 ### Resolved
-- Fixed path aliases in `tsconfig.json` to match actual folder structure.
+- Fixed path aliases in `tsconfig.json` to match project structure.
 - Created placeholder components (`chat-modal.tsx`, `useAuth.tsx`).
 - Fixed "Invalid time value" error in task rendering.
 - Implemented mock AI parsing endpoint for chat task creation.
+- Resolved task persistence after logout by clearing tasks state in `app/page.tsx`.
+- Fixed profile picture display issue in `components/app-bar.tsx`, now displaying correctly.
 
 ### Pending
 - Address any remaining "Cannot find module" errors via IDE restart or cache clearing.
-- Implement real Gemini API integration for AI parsing.
+- Resolve Gemini API integration 500 errors through detailed error analysis.
 - Complete email digest functionality.

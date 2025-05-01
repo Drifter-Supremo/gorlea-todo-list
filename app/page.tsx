@@ -22,12 +22,15 @@ export default function Home() {
 
   // Fetch tasks from Firestore on load and after changes
   const refreshTasks = useCallback(() => {
-    if (!userId) return
+    if (!userId) {
+      setTasks([]); // Clear tasks when no user is logged in
+      return;
+    }
     getTasks(userId).then(setTasks).catch(() => setTasks([]))
   }, [userId])
 
   useEffect(() => {
-    if (userId) refreshTasks()
+    refreshTasks();
   }, [refreshTasks, userId])
 
   // Add a new task
