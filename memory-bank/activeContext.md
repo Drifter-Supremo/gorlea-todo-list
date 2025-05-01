@@ -2,32 +2,30 @@
 
 ## Current Work Focus
 
-- Integrating Gemini AI parsing (Phase 3) for natural language task input.
-- All core CRUD, time picker, and mobile/desktop UX features are complete.
-- Task cards now support a title and a details field, with truncation and a responsive details modal.
-- On mobile, only the title and due date are shown; delete icon is hidden for a cleaner look.
-- Long-press on mobile shows only the delete action.
-- "Details" is used everywhere in the UI instead of "description."
-- Documentation and memory bank are kept fully up to date for handoff.
+- Integrating AI parsing for natural language task input via a mock endpoint.
+- Resolving runtime errors related to invalid due date values in task rendering.
+- Ensuring all components use relative import paths to avoid "Cannot find module" errors.
+- Updating documentation and memory bank for seamless handoff and continuity.
 
 ## Recent Changes
 
-- Task cards updated: support for details field, title truncation, and modal with full details and edit controls (responsive for mobile/desktop).
-- Mobile view improved: only title and due date shown, delete icon hidden, long-press menu shows only delete.
-- All UI labels now use "Details" instead of "Description."
-- Completed all Phase 2 features: Firestore CRUD helpers, per-user storage, add/edit modal with time picker, mobile long-press actions, edit/delete improvements, minimal confirmation dialogs.
-- All features committed and pushed to main branch.
-- Documentation and MVP checklist updated.
+- Fixed "Invalid time value" error in 'components/task-row.tsx' by adding checks for invalid due dates.
+- Created mock API endpoint '/api/ai/parse' to simulate AI parsing for chat input, extracting title, details, due date, and priority based on natural language cues.
+- Updated 'src/lib/parseTask.ts' to send proper POST requests to the mock endpoint.
+- Enhanced 'src/components/chat-modal.tsx' with state management and error handling for AI task creation.
+- Converted alias imports to relative paths across multiple components to resolve module resolution errors.
+- Updated 'src/lib/firestore.ts' to handle due date conversion from Firestore Timestamps to JavaScript Date objects.
 
 ## Next Steps
 
-1. Integrate Gemini AI parsing and connect to task creation flow (Phase 3).
-2. Establish daily email digest functionality.
-3. Prepare for deployment and production testing.
-4. Continue updating documentation and memory bank for seamless AI and human handoff.
+1. Implement actual AI logic using Gemini API for natural language parsing in '/api/ai/parse'.
+2. Test the full task creation flow via AI chat to ensure seamless integration.
+3. Address any remaining "Cannot find module" errors by verifying TypeScript cache and IDE settings.
+4. Continue updating documentation for all changes and ensure memory bank reflects the latest state.
 
 ## Active Decisions & Considerations
 
-- Prioritize documentation to ensure smooth onboarding and memory continuity.
-- Follow MVP roadmap phases sequentially.
-- Use AI assistant for both user-facing features and internal productivity.
+- Prioritize mock implementation for AI parsing to ensure functionality before real API integration.
+- Maintain consistent use of relative paths for imports to avoid alias resolution issues.
+- Focus on robust error handling for date values and API calls to prevent white screen errors.
+- Keep documentation up-to-date for smooth AI and human handoff.

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Dialog, DialogContent } from "../../components/ui/dialog";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -10,7 +11,26 @@ import { addTask } from "../lib/firestore";
 
 export function ChatModal() {
   const { toast } = useToast();
+  const [input, setInput] = useState("");
   
+  const handleSend = async () => {
+    if (!input.trim()) return;
+    try {
+      const parsed = await parseTask(input);
+      await addTask({
+        title: parsed.title,
+        details: parsed.details,
+        dueDate: parsed.dueDate ? new Date(parsed.dueDate) : null,
+        priority: parsed.priority
+      });
+      toast({ title: "✅ Task added!" });
+      setInput("");
+    } catch (error) {
+      console.error("Error adding task via chat:", error);
+      toast({ title: "Error", description: "Failed to add task. Please try again." });
+    }
+  };
+
   return (
     <Dialog>
       <DialogContent>
@@ -18,21 +38,13 @@ export function ChatModal() {
           {/* Chat messages will be displayed here */}
         </ScrollArea>
         <div className="flex gap-2">
-          <Input placeholder="Enter your task..." />
-          <Button onClick={async () => {
-            const inputElement = document.querySelector('input[placeholder="Enter your task..."]') as HTMLInputElement;
-            if (inputElement && inputElement.value.trim()) {
-              const parsed = await parseTask(inputElement.value);
-              await addTask({
-                title: parsed.title,
-                details: parsed.details,
-                dueDate: parsed.dueDate ? new Date(parsed.dueDate) : null,
-                priority: parsed.priority
-              });
-              toast({ title: "✅ Task added!" });
-              inputElement.value = '';
-            }
-          }}>Send</Button>
+          <Input 
+            placeholder="Enter your task..." 
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+          />
+          <Button onClick={handleSend}>Send</Button>
         </div>
       </DialogContent>
     </Dialog>

@@ -2,7 +2,7 @@
 
 ## What Works
 
-- Project documentation (projectbrief.md, productContext.md, activeContext.md, systemPatterns.md, techContext.md) is scaffolded.
+- Project documentation (projectbrief.md, productContext.md, activeContext.md, systemPatterns.md, techContext.md) is scaffolded and updated.
 - MVP roadmap and technical requirements are clearly defined.
 - Initial project structure and planning are complete.
 - Environment and secrets setup complete.
@@ -16,37 +16,40 @@
 - All UI labels use "Details" instead of "Description."
 - Minimal delete confirmation dialog (all devices).
 - Edit modal improvements: pre-filling, unified for add/edit.
+- Fixed "Invalid time value" error in task rendering by handling invalid due dates.
+- Created mock API endpoint for AI parsing, simulating natural language task input processing.
+- Updated chat modal with state management and error handling for task creation via AI.
 - All changes tested and committed/pushed to repo.
 
 ## What's Left to Build
 
-
-- Authentication wired to UI (app-bar.tsx).
-- Tailwind color variables added (globals.css).
-- UI ready for further color refactoring if desired.
-- Integrate Gemini AI parsing for natural language task input.
+- Integrate Gemini AI parsing for natural language task input with real API calls.
 - Establish daily email digest functionality.
 - Prepare for deployment to Vercel and production testing.
-- Implement future enhancements: task filtering, details field, categories, calendar view, notifications, advanced AI features.
+- Implement future enhancements: task filtering, categories, calendar view, notifications, advanced AI features.
 
 ## Current Status
 
-- Project is now in Phase 3: Gemini AI parsing integration (Cloud Function, natural language task input).
+- Project is now in Phase 3: Gemini AI parsing integration (mock endpoint created, real integration pending).
 - All Phase 2 features (Firestore CRUD, time picker, mobile/desktop UX, edit/delete) are complete and live in main branch.
-- Documentation and memory bank are fully up to date for AI or developer handoff.
+- Fixed runtime errors related to invalid due dates, ensuring app loads without white screen.
+- Documentation and memory bank files are up to date for AI or new developer handoff.
 
 ## Known Issues
 
-- Gemini integration pending (Phase 3, in progress).
+- Gemini integration pending (Phase 3, currently using mock endpoint).
 - No deployed version available yet.
+- Some "Cannot find module" errors may persist due to TypeScript cache or IDE issues, resolvable by restart or cache clearing.
 
 ## May 2025
 
 ### Resolved
-- Fixed path aliases in `tsconfig.json` to match actual folder structure (no file moves)
-- Created placeholder components (`chat-modal.tsx`, `useAuth.tsx`)
+- Fixed path aliases in `tsconfig.json` to match actual folder structure.
+- Created placeholder components (`chat-modal.tsx`, `useAuth.tsx`).
+- Fixed "Invalid time value" error in task rendering.
+- Implemented mock AI parsing endpoint for chat task creation.
 
 ### Pending
-- Address missing exports: `DialogContent`, `updateTask`, `deleteTask`
-- Implement chat modal interaction logic
-- Add accessibility props to `DialogContent`
+- Address any remaining "Cannot find module" errors via IDE restart or cache clearing.
+- Implement real Gemini API integration for AI parsing.
+- Complete email digest functionality.

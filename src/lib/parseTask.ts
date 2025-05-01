@@ -6,9 +6,17 @@ export interface ParsedTask {
 }
 
 export async function parseTask(input: string): Promise<ParsedTask> {
-  // your Gemini/OpenAI call here
-  // for now, assume it returns JSON.string of ParsedTask
-  const res = await fetch("/api/ai/parse", { /* … */ })
+  // Mock API call to /api/ai/parse
+  const res = await fetch("/api/ai/parse", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ input })
+  })
+  if (!res.ok) {
+    throw new Error(`API request failed with status ${res.status}`)
+  }
   const json: ParsedTask = await res.json()
   return json
 }
