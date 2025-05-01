@@ -70,31 +70,23 @@ _Note: listenTasks (real-time) not yet implemented; currently using getTasks for
 
 ---
 
-Phase 3 – Gemini 2.0 Flash Cloud Function
+Phase 3 – OpenAI GPT-4.1-mini Integration
 
-[ ] 3.1 firebase init functions (TypeScript)
+[x] 3.1 Install OpenAI client and update environment variables with `OPENAI_API_KEY` and `OPENAI_MODEL`.
 
-[ ] 3.2 Add functions/parseTask.ts onCall function:
+[x] 3.2 Update 'src/lib/parseTask.ts' to use OpenAI client for natural language parsing with system prompt: "Convert the user’s sentence into JSON → {title, details, dueDate (ISO), priority(low|medium|high)}. Return ONLY the JSON."
 
-Input { text: string }
+[x] 3.3 Update 'app/api/ai/parse/route.ts' to call the new parsing function and handle API requests.
 
-Call Gemini 2.0 Flash via @google/generative-ai with system prompt: "Convert the user’s sentence into JSON → {title, dueTimestamp (ISO), priority(low|medium|high)}. Return ONLY the JSON."
-
-Validate & return JSON; log errors
-
-[ ] 3.3 firebase emulators:start → local test
-
-[ ] 3.4 firebase deploy --only functions
+[x] 3.4 Test local integration to ensure task parsing works with OpenAI API.
 
 ---
 
 Phase 4 – AI Parsing Integration
 
-[ ] 4.1 In add-task-modal.tsx:
-
-On submit, call httpsCallable('parseTask')
-
-On success, invoke addTask() with returned JSON
+[x] 4.1 In 'components/chat-modal.tsx':
+    - Call API route '/api/ai/parse' for natural language input processing.
+    - On success, invoke addTask() with returned JSON to add the task to Firestore.
 
 [ ] 4.2 Implement optimistic UI updates & error toasts via shadcn useToast
 

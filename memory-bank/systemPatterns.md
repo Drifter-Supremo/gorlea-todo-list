@@ -6,7 +6,7 @@
 - **Styling:** Tailwind CSS for utility-first styling; shadcn/ui for reusable UI components.
 - **State Management:** React state and context for UI state; Firebase for persistent data.
 - **Backend/Cloud:** Firebase (Firestore, Auth, Functions) for real-time data, authentication, and serverless logic.
-- **AI Integration:** Gemini 2.0 Flash via Google Generative AI for natural language task parsing and assistant features (Phase 3, facing 500 errors during real integration).
+- **AI Integration:** OpenAI's GPT-4.1-mini for natural language task parsing and assistant features (Phase 3 completed with successful integration).
 - **All CRUD, time picker, mobile/desktop UX, and edit/delete features are complete and live.**
 - **Task cards: on mobile, only title and due date are shown; delete icon is hidden for clarity.**
 - **Details modal for editing and viewing full info; long-press on mobile shows only delete.**
@@ -19,13 +19,13 @@
 - Modular component structure for maintainability and scalability.
 - Integration of shadcn/ui for consistent, accessible UI patterns.
 - Firebase chosen for real-time sync, authentication, and serverless functions.
-- AI parsing handled via a dedicated endpoint in 'app/api/ai/parse/route.ts', currently using a mock setup due to integration issues with Gemini API.
+- AI parsing handled via a dedicated endpoint in 'app/api/ai/parse/route.ts', now using OpenAI's GPT-4.1-mini after switching from Gemini due to integration issues.
 - Progressive Web App (PWA) support for offline functionality and installability.
 
 ## Design Patterns
 
 - **Container/Presentational Components:** Separation of logic and UI for testability.
-- **Optimistic UI Updates:** Immediate feedback for task actions, with error handling via toasts.
+- **Optimistic UI Updates:** Immediate feedback for task actions, with error handling via toasts (pending implementation for AI task creation).
 - **Single Source of Truth:** Firestore as the canonical data store for tasks.
 - **Service Abstraction:** Utility modules (e.g., lib/tasks.ts) abstract Firestore and AI logic from UI.
 - **Consistent use of "Details" field in all task-related UI and logic.**
@@ -35,7 +35,7 @@
 - **app-bar.tsx:** Top-level navigation and user controls, now correctly displaying profile pictures after resolution.
 - **add-task-button.tsx / add-task-modal.tsx:** Entry point for new tasks, integrates AI parsing. "Details" field replaces "Description."
 - **task-list.tsx / task-row.tsx:** Display and manage tasks, connected to Firestore. On mobile, only title and due date are shown; delete icon hidden.
-- **chat-button.tsx / chat-modal.tsx:** Access Gorlea AI assistant.
+- **chat-button.tsx / chat-modal.tsx:** Access Gorlea AI assistant, now using OpenAI for task parsing.
 - **UI components (ui/):** Shared building blocks for dialogs, buttons, forms, etc.
 
 ## Patterns for Extensibility

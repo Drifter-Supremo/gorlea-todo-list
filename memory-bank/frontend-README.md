@@ -1,6 +1,6 @@
 # Gorlea Tasks
 
-A minimal task management web application with an AI assistant built using Next.js, React, Tailwind CSS, and shadcn/ui.
+A minimal task management web application with an AI assistant built using Next.js, React, Firebase, and shadcn/ui.
 
 ![Gorlea Tasks](https://hebbkx1anhila5yf.public.blob.vercel-storage.com/gorlea-logo-pRLW6ezEqdZlsBjxIPIRKmG3oKrXUK.png)
 
@@ -13,8 +13,8 @@ A minimal task management web application with an AI assistant built using Next.
   - Organize tasks into "To Do" and "Completed" sections
   
 - **AI Assistant**
-  - Chat with Gorlea AI about your tasks and ideas
-  - Get suggestions and assistance with task management
+  - Chat with Gorlea, your AI assistant powered by OpenAI's GPT-4.1-mini
+  - Create tasks using natural language input (e.g., "Schedule a meeting tomorrow at 2 PM")
   - Interactive chat interface
   
 - **User Interface**
@@ -31,6 +31,8 @@ A minimal task management web application with an AI assistant built using Next.
 - **Tailwind CSS** - Utility-first CSS framework
 - **shadcn/ui** - Reusable component library
 - **TypeScript** - Type-safe JavaScript
+- **Firebase** - Backend for authentication and data storage
+- **OpenAI GPT-4.1-mini** - AI for natural language task parsing
 - **date-fns** - Date utility library
 - **Lucide React** - Icon library
 
@@ -90,7 +92,7 @@ cd gorlea-tasks
 npm install
 ```
 
-3. Set up environment variables in `.env.local` with necessary Firebase and Gemini API keys.
+3. Set up environment variables in `.env.local` with necessary Firebase and OpenAI API keys.
 
 4. Run the development server:
 

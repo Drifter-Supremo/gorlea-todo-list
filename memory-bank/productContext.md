@@ -15,7 +15,7 @@ Gorlea Tasks was created to address the need for a smarter, more intuitive task 
 ## How It Should Work
 
 - Users enter tasks in natural language (e.g., "Call John tomorrow at 2 PM").
-- The system parses and extracts details (with a "Details" field, not "Description"), due dates, priorities, and categories automatically (Phase 3, in progress).
+- The system parses and extracts details (with a "Details" field, not "Description"), due dates, priorities, and categories automatically using OpenAI's GPT-4.1-mini.
 - An integrated AI assistant (Gorlea) helps with task management, suggestions, and productivity queries.
 - Tasks are categorized and prioritized intelligently.
 - The UI is minimal, responsive, and supports both light and dark modes.
