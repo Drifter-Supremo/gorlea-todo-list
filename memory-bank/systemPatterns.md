@@ -43,3 +43,16 @@
 - Feature roadmap includes modular enhancements (filtering, calendar, notifications).
 - Cloud Functions and AI logic are decoupled for future upgrades.
 - UI and logic layers are separated for easier testing and maintenance.
+
+## May 2025
+
+### Path Aliases (Updated)
+```json
+// tsconfig.json
+{
+  "baseUrl": ".",
+  "paths": {
+    "@components/*": ["components/*"],
+    "@lib/*": ["src/lib/*"]
+  }
+}

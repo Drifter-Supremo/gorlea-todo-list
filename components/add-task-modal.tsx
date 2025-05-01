@@ -1,23 +1,23 @@
 "use client"
 
 import { useState } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Calendar } from "@/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "./ui/dialog"
+import { Button } from "./ui/button"
+import { Textarea } from "./ui/textarea"
+import { Label } from "./ui/label"
+import { Calendar } from "./ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
-import type { Task } from "@/lib/types"
+import { cn } from "../src/lib/utils"
+import type { Task, TaskInput } from "../src/lib/types"
 
 interface AddTaskModalProps {
   isOpen: boolean
   onClose: () => void
-  onAddTask: (task: Omit<Task, "id" | "completed">) => void
-  initialValues?: Partial<Omit<Task, "completed">>
+  onAddTask: (data: TaskInput) => Promise<string>
+  initialValues?: Partial<TaskInput>
 }
 
 function generateTimeOptions() {
@@ -38,7 +38,7 @@ function generateTimeOptions() {
 
 export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddTaskModalProps) {
   const [title, setTitle] = useState(initialValues?.title || "")
-  const [description, setDescription] = useState(initialValues?.description || "")
+  const [details, setDetails] = useState(initialValues?.details || "")
   const [dueDate, setDueDate] = useState<Date>(initialValues?.dueDate ? new Date(initialValues.dueDate) : new Date())
   const [priority, setPriority] = useState<Task["priority"]>(initialValues?.priority || "medium")
   // Time picker state (default to 09:00 AM if adding, or extract from dueDate if editing)
@@ -48,7 +48,7 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
   const [time, setTime] = useState(initialTime)
   const timeOptions = generateTimeOptions()
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!title.trim()) return
 
     // Combine dueDate and time
@@ -56,9 +56,9 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
     const due = new Date(dueDate)
     due.setHours(hours, minutes, 0, 0)
 
-    onAddTask({
+    await onAddTask({
       title: title.trim(),
-      description: description.trim(),
+      details: details.trim(),
       dueDate: due,
       priority,
     })
@@ -66,7 +66,7 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
     // Reset form only if adding (not editing)
     if (!initialValues) {
       setTitle("")
-      setDescription("")
+      setDetails("")
       setDueDate(new Date())
       setPriority("medium")
       setTime("09:00")
@@ -74,7 +74,7 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <Dialog open={isOpen} onOpenChange={(open: boolean) => !open && onClose()}>
       <DialogContent className="bg-[#032934] text-[#F5E8C2] border-[#F5E8C2]/20 sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-[#F5E8C2]">
@@ -91,19 +91,19 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
               id="title"
               placeholder="What needs to be done?"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setTitle(e.target.value)}
               className="bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus-visible:ring-[#F29600]"
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="description" className="text-[#F5E8C2]">
+            <Label htmlFor="details" className="text-[#F5E8C2]">
               Details
             </Label>
             <Textarea
-              id="description"
+              id="details"
               placeholder="Add more details (optional)"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={details}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDetails(e.target.value)}
               className="bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus-visible:ring-[#F29600]"
               rows={3}
             />
@@ -128,7 +128,7 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
                 <Calendar
                   mode="single"
                   selected={dueDate}
-                  onSelect={(date) => date && setDueDate(date)}
+                  onSelect={(date: Date | undefined) => date && setDueDate(date)}
                   initialFocus
                   className="bg-[#032934] text-[#F5E8C2]"
                 />

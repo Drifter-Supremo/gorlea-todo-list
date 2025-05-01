@@ -1,110 +1,66 @@
 "use client"
 
-import { useState } from "react"
-import { TaskList } from "@/components/task-list"
-import { AppBar } from "@/components/app-bar"
-import { AddTaskButton } from "@/components/add-task-button"
-import { AddTaskModal } from "@/components/add-task-modal"
-import type { Task } from "@/lib/types"
-import { ChatButton } from "@/components/chat-button"
-import { ChatModal } from "@/components/chat-modal"
-
-// Mock initial tasks
-const initialTasks: Task[] = [
-  {
-    id: "1",
-    title: "Complete project proposal",
-    completed: false,
-    dueDate: new Date(Date.now() + 86400000 * 2), // 2 days from now
-    priority: "high",
-  },
-  {
-    id: "2",
-    title: "Review team documentation",
-    completed: true,
-    dueDate: new Date(Date.now() - 86400000), // 1 day ago
-    priority: "medium",
-  },
-  {
-    id: "3",
-    title: "Prepare for client meeting",
-    completed: false,
-    dueDate: new Date(Date.now() + 86400000 * 5), // 5 days from now
-    priority: "low",
-  },
-]
-
-import { useAuth } from "@/hooks/useAuth"
-import { getTasks, addTask as addTaskFirestore, updateTask as updateTaskFirestore, deleteTask as deleteTaskFirestore } from "@/lib/firestore"
-import { useEffect } from "react"
-
-import { useCallback } from "react"
+import { useState, useEffect, useCallback } from "react"
+import { TaskList } from "../components/task-list"
+import { AppBar } from "../components/app-bar"
+import { AddTaskButton } from "../components/add-task-button"
+import { AddTaskModal } from "../components/add-task-modal"
+import type { Task, TaskInput } from "../src/lib/types"
+import { ChatButton } from "../components/chat-button"
+import { ChatModal } from "../components/chat-modal"
+import { getTasks, addTask, updateTask, deleteTask } from "../src/lib/firestore"
+import { useAuth } from "../hooks/useAuth"
 
 export default function Home() {
   const { user, loading } = useAuth();
-  const userId = user?.uid;
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editTask, setEditTask] = useState<Task | null>(null);
-  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+  const userId = user?.uid || "";
+  const [tasks, setTasks] = useState<Task[]>([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [editTask, setEditTask] = useState<Task | null>(null)
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false)
 
-  // Fetch tasks from Firestore when user is signed in
+  // Fetch tasks from Firestore on load and after changes
+  const refreshTasks = useCallback(() => {
+    if (!userId) return
+    getTasks(userId).then(setTasks).catch(() => setTasks([]))
+  }, [userId])
+
   useEffect(() => {
-    if (userId) {
-      getTasks(userId).then((tasks) => {
-        // Ensure every task has a string id
-        setTasks(tasks.filter((t): t is Task => !!t.id));
-      }).catch(() => setTasks([]));
-    } else {
-      setTasks([]);
-    }
-  }, [userId]);
+    if (userId) refreshTasks()
+  }, [refreshTasks, userId])
 
   // Add a new task
-  const addTask = async (task: Omit<Task, "id" | "completed">) => {
-    if (!userId) return;
-    const newTask = { ...task, completed: false };
-    const docRef = await addTaskFirestore(userId, newTask);
-    setTasks([...tasks, { ...newTask, id: docRef.id }]);
-    setIsModalOpen(false);
-  };
+  async function handleAddTask(data: TaskInput): Promise<string> {
+    const newId = await addTask(data)
+    setTasks(ts => [...ts, { id: newId, completed: false, ...data }])
+    return newId
+  }
+
+  // Update a task
+  async function handleUpdateTask(id: string, updates: Partial<TaskInput>): Promise<void> {
+    await updateTask(id, updates)
+    setTasks(ts => ts.map(task => task.id === id ? { ...task, ...updates } : task))
+  }
+
+  // Delete a task
+  async function handleDeleteTask(id: string): Promise<void> {
+    await deleteTask(id)
+    setTasks(ts => ts.filter(task => task.id !== id))
+  }
 
   // Toggle task completion status
   const toggleTaskCompletion = async (id: string) => {
-    if (!userId) return;
-    const target = tasks.find((task) => task.id === id);
-    if (!target) return;
-    const updated = { ...target, completed: !target.completed };
-    await updateTaskFirestore(userId, id, { completed: updated.completed });
-    setTasks(tasks.map((task) => (task.id === id ? updated : task)));
-  };
-
-  // Delete a task (if desired, e.g. add a delete button and call this)
-  const deleteTask = async (id: string) => {
-    if (!userId) return;
-    await deleteTaskFirestore(userId, id);
-    setTasks(tasks.filter((task) => task.id !== id));
-  };
+    const target = tasks.find((task) => task.id === id)
+    if (!target) return
+    await handleUpdateTask(id, { completed: !target.completed } as any)
+  }
 
   // Edit a task (open modal)
   const handleEditTask = useCallback((task: Task) => {
-    setEditTask(task);
-    setIsEditModalOpen(true);
-  }, []);
-
-  // Update a task in Firestore and UI
-  const updateTask = async (updated: Omit<Task, "completed"> & { id: string }) => {
-    if (!userId) return;
-    await updateTaskFirestore(userId, updated.id, {
-      title: updated.title,
-      dueDate: updated.dueDate,
-      priority: updated.priority,
-    });
-    setTasks(tasks.map((task) => (task.id === updated.id ? { ...task, ...updated } : task)));
-    setIsEditModalOpen(false);
-    setEditTask(null);
-  };
+    setEditTask(task)
+    setIsEditModalOpen(true)
+  }, [])
 
   return (
     <div className="min-h-screen bg-[#032934] text-[#F5E8C2] flex flex-col">
@@ -115,7 +71,7 @@ export default function Home() {
           <TaskList
             tasks={tasks}
             onToggleCompletion={toggleTaskCompletion}
-            onDelete={deleteTask}
+            onDelete={handleDeleteTask}
             onEdit={handleEditTask}
           />
         </div>
@@ -124,23 +80,27 @@ export default function Home() {
       <AddTaskButton onClick={() => setIsModalOpen(true)} />
       <ChatButton onClick={() => setIsChatModalOpen(true)} />
 
-      <AddTaskModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onAddTask={addTask} />
+      <AddTaskModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onAddTask={handleAddTask} />
       {/* Edit Task Modal - reuse AddTaskModal with prefilled values */}
       {editTask && (
         <AddTaskModal
           isOpen={isEditModalOpen}
           onClose={() => {
-            setIsEditModalOpen(false);
-            setEditTask(null);
+            setIsEditModalOpen(false)
+            setEditTask(null)
           }}
-          onAddTask={(data) => updateTask({ ...data, id: editTask.id })}
+          onAddTask={async (data) => {
+            if (editTask) await handleUpdateTask(editTask.id, data)
+            setIsEditModalOpen(false)
+            setEditTask(null)
+            return editTask?.id || ""
+          }}
           key={editTask.id}
           // @ts-ignore
           initialValues={editTask}
         />
       )}
-      <ChatModal isOpen={isChatModalOpen} onClose={() => setIsChatModalOpen(false)} />
+      <ChatModal isOpen={isChatModalOpen} onClose={() => setIsChatModalOpen(false)} refreshTasks={refreshTasks} />
     </div>
   )
 }
-

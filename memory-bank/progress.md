@@ -39,3 +39,14 @@
 
 - Gemini integration pending (Phase 3, in progress).
 - No deployed version available yet.
+
+## May 2025
+
+### Resolved
+- Fixed path aliases in `tsconfig.json` to match actual folder structure (no file moves)
+- Created placeholder components (`chat-modal.tsx`, `useAuth.tsx`)
+
+### Pending
+- Address missing exports: `DialogContent`, `updateTask`, `deleteTask`
+- Implement chat modal interaction logic
+- Add accessibility props to `DialogContent`

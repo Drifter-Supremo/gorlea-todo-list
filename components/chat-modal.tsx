@@ -1,17 +1,20 @@
 "use client"
 
-import type React from "react"
-
 import { useState, useRef, useEffect } from "react"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { parseTask } from "../src/lib/parseTask"
+import { addTask } from "../src/lib/firestore"
+import { nanoid } from "nanoid"
+import { toast } from "./ui/use-toast"
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog"
+import { Button } from "./ui/button"
+import { Input } from "./ui/input"
+import { ScrollArea } from "./ui/scroll-area"
 import { Send } from "lucide-react"
 
 interface ChatModalProps {
   isOpen: boolean
   onClose: () => void
+  refreshTasks?: () => void
 }
 
 interface Message {
@@ -21,7 +24,7 @@ interface Message {
   timestamp: Date
 }
 
-export function ChatModal({ isOpen, onClose }: ChatModalProps) {
+export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -34,7 +37,6 @@ export function ChatModal({ isOpen, onClose }: ChatModalProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
 
-  // Focus input when modal opens
   useEffect(() => {
     if (isOpen && inputRef.current) {
       setTimeout(() => {
@@ -43,7 +45,6 @@ export function ChatModal({ isOpen, onClose }: ChatModalProps) {
     }
   }, [isOpen])
 
-  // Scroll to bottom when messages change
   useEffect(() => {
     if (scrollAreaRef.current) {
       const scrollElement = scrollAreaRef.current
@@ -51,47 +52,25 @@ export function ChatModal({ isOpen, onClose }: ChatModalProps) {
     }
   }, [messages])
 
-  const handleSendMessage = () => {
+  const handleSend = async () => {
     if (!input.trim()) return
-
-    // Add user message
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      content: input.trim(),
-      sender: "user",
-      timestamp: new Date(),
-    }
-
-    setMessages((prev) => [...prev, userMessage])
+    const parsed = await parseTask(input)
+    await addTask({
+      title: parsed.title,
+      details: parsed.details,
+      dueDate: parsed.dueDate ? new Date(parsed.dueDate) : null,
+      priority: parsed.priority
+    })
+    toast({ title: "✅ Task added!" })
+    onClose()
+    if (refreshTasks) refreshTasks()
     setInput("")
-
-    // Simulate AI response (in a real app, this would call an AI API)
-    setTimeout(() => {
-      const aiResponses = [
-        "I can help you organize those tasks!",
-        "Would you like me to suggest a priority for your upcoming tasks?",
-        "I notice you have several tasks due soon. Need help planning your schedule?",
-        "I can analyze your task patterns if you'd like some productivity insights.",
-        "Let me know if you need help breaking down any of your larger tasks.",
-      ]
-
-      const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)]
-
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        content: randomResponse,
-        sender: "ai",
-        timestamp: new Date(),
-      }
-
-      setMessages((prev) => [...prev, aiMessage])
-    }, 1000)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault()
-      handleSendMessage()
+      handleSend()
     }
   }
 
@@ -101,15 +80,9 @@ export function ChatModal({ isOpen, onClose }: ChatModalProps) {
         className="bg-[#032934] text-[#F5E8C2] border-[#F5E8C2]/20 p-0 sm:max-w-[500px] max-h-[80vh] flex flex-col"
         onInteractOutside={onClose}
       >
-        {/* Chat header */}
-        <div className="p-4 border-b border-[#F5E8C2]/10 flex items-center">
-          <div className="w-8 h-8 rounded-full bg-[#F29600] flex items-center justify-center mr-3">
-            <span className="text-[#032934] font-bold">G</span>
-          </div>
-          <h2 className="text-lg font-semibold">Chat with Gorlea</h2>
-        </div>
-
-        {/* Chat messages */}
+        <DialogHeader>
+          <DialogTitle>Chat with Gorlea</DialogTitle>
+        </DialogHeader>
         <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
           <div className="space-y-4">
             {messages.map((message) => (
@@ -128,8 +101,6 @@ export function ChatModal({ isOpen, onClose }: ChatModalProps) {
             ))}
           </div>
         </ScrollArea>
-
-        {/* Chat input */}
         <div className="p-4 border-t border-[#F5E8C2]/10 flex items-center gap-2">
           <Input
             ref={inputRef}
@@ -140,7 +111,7 @@ export function ChatModal({ isOpen, onClose }: ChatModalProps) {
             className="flex-1 bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus-visible:ring-[#F29600]"
           />
           <Button
-            onClick={handleSendMessage}
+            onClick={handleSend}
             className="bg-[#F29600] hover:bg-[#F29600]/90 text-[#032934] px-3"
             disabled={!input.trim()}
           >

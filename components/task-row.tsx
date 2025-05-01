@@ -1,8 +1,8 @@
 "use client"
 
-import { Checkbox } from "@/components/ui/checkbox"
-import { Badge } from "@/components/ui/badge"
-import type { Task } from "@/lib/types"
+import { Checkbox } from "./ui/checkbox"
+import { Badge } from "./ui/badge"
+import type { Task } from "../src/lib/types"
 import { format, isToday, isTomorrow, isPast } from "date-fns"
 
 interface TaskRowProps {
@@ -13,8 +13,8 @@ interface TaskRowProps {
 }
 
 import { Trash, Edit2 } from "lucide-react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "./ui/dialog"
+import { Button } from "./ui/button"
 import { useState } from "react"
 
 export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowProps) {
@@ -33,7 +33,8 @@ export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowP
     }
   }
   // Format the due date
-  const formatDueDate = (date: Date) => {
+  const formatDueDate = (date: Date | null | undefined) => {
+    if (!date || isNaN(date.getTime())) return "No Date"
     if (isToday(date)) {
       return "Today"
     } else if (isTomorrow(date)) {
@@ -45,7 +46,7 @@ export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowP
 
   // Determine badge color based on priority and due date
   const getBadgeVariant = () => {
-    if (isPast(task.dueDate) && !task.completed) {
+    if (task.dueDate && !isNaN(task.dueDate.getTime()) && isPast(task.dueDate) && !task.completed) {
       return "destructive"
     }
 
@@ -132,15 +133,15 @@ export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowP
           <div className="py-2">
             <div className="mb-2">
               <span className="font-semibold text-[#F29600]">Due:</span>{" "}
-              {format(task.dueDate, "PPP p")}
+              {task.dueDate ? format(task.dueDate, "PPP p") : "No Due Date"}
             </div>
             <div className="mb-2">
               <span className="font-semibold text-[#F29600]">Priority:</span>{" "}
-              {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+              {task.priority ? task.priority.charAt(0).toUpperCase() + task.priority.slice(1) : "No Priority"}
             </div>
             <div>
               <span className="font-semibold text-[#F29600]">Details</span>
-              <div className="whitespace-pre-line mt-1">{task.description || <span className="italic text-[#F5E8C2]/60">No details</span>}</div>
+              <div className="whitespace-pre-line mt-1">{task.details || <span className="italic text-[#F5E8C2]/60">No details</span>}</div>
             </div>
           </div>
           <DialogFooter>

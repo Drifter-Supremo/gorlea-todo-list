@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { auth } from "../lib/firebase";
+import { auth } from "../src/lib/firebase";
 import {
   GoogleAuthProvider,
   signInWithPopup,

@@ -1,10 +1,10 @@
 "use client"
 
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { TaskRow } from "@/components/task-row"
-import { EmptyState } from "@/components/empty-state"
-import type { Task } from "@/lib/types"
+import { ScrollArea } from "./ui/scroll-area"
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
+import { TaskRow } from "./task-row"
+import { EmptyState } from "./empty-state"
+import type { Task } from "../src/lib/types"
 
 interface TaskListProps {
   tasks: Task[]
@@ -17,8 +17,12 @@ export function TaskList({ tasks, onToggleCompletion, onDelete, onEdit }: TaskLi
   const incompleteTasks = tasks.filter((task) => !task.completed)
   const completedTasks = tasks.filter((task) => task.completed)
 
-  // Sort tasks by due date (earliest first)
-  const sortedIncompleteTasks = [...incompleteTasks].sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime())
+  // Sort tasks by due date (earliest first), handle null/undefined dueDate
+  const sortedIncompleteTasks = [...incompleteTasks].sort((a, b) => {
+    if (!a.dueDate) return -1
+    if (!b.dueDate) return 1
+    return a.dueDate.getTime() - b.dueDate.getTime()
+  })
 
   return (
     <Card className="bg-[#032934] border border-[#F5E8C2]/20 shadow-lg">
