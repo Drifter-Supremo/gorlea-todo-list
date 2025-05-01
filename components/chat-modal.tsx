@@ -76,24 +76,16 @@ export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
         throw new Error(`API request failed with status ${response.status}`)
       }
       
-      const parsedTask = await response.json()
+      const result = await response.json()
       
       // Add AI response to chat
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: `I've created a task: "${parsedTask.title}"`,
+        content: `I've created a task: "${result.title}"`,
         sender: "ai",
         timestamp: new Date(),
       }
       setMessages(prev => [...prev, aiMessage])
-      
-      // Add the task to Firestore
-      await addTask({
-        title: parsedTask.title,
-        details: parsedTask.details,
-        dueDate: parsedTask.dueDate ? new Date(parsedTask.dueDate) : null,
-        priority: parsedTask.priority || "medium"
-      })
       
       toast({ title: "✅ Task added!" })
       onClose()
@@ -125,7 +117,9 @@ export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
       <DialogContent
         className="bg-[#032934] text-[#F5E8C2] border-[#F5E8C2]/20 p-0 sm:max-w-[500px] max-h-[80vh] flex flex-col"
         onInteractOutside={onClose}
+        aria-describedby="dialog-description"
       >
+        <span id="dialog-description" style={{ display: 'none' }}>Chat dialog for interacting with Gorlea, your AI task assistant.</span>
         <DialogHeader>
           <DialogTitle>Chat with Gorlea</DialogTitle>
         </DialogHeader>

@@ -6,7 +6,7 @@
 - MVP roadmap and technical requirements are clearly defined.
 - Initial project structure and planning are complete.
 - Environment and secrets setup complete.
-- All core dependencies installed (Firebase, Google OAuth, OpenAI, date-fns).
+- All core dependencies installed (Firebase, Google OAuth, OpenAI, date-fns, chrono-node).
 - Firebase initialized (lib/firebase.ts).
 - Authentication hook implemented (hooks/useAuth.tsx).
 - Firestore CRUD helpers fully implemented and integrated with UI.
@@ -22,6 +22,11 @@
 - Fixed task persistence after logout by clearing tasks state when no user is logged in.
 - Resolved profile picture display issue in app bar, confirmed working after user feedback.
 - Successfully integrated OpenAI's GPT-4.1-mini for natural language task parsing, replacing Gemini due to integration issues.
+- Integrated 'chrono-node' for enhanced date and time parsing, offloading date extraction from AI, with support for fuzzy phrases and default times.
+- Refactored 'src/lib/firestore.ts' for server-side compatibility by removing client-side auth checks and accepting 'userId' as a parameter.
+- Harmonized 'Task' and 'TaskInput' types in 'src/lib/types.ts' with 'userId' for consistency.
+- Added environment variable validation in 'src/lib/parseTask.ts' and 'src/lib/firebase.ts' to prevent runtime errors.
+- Improved accessibility in 'components/chat-modal.tsx' and 'components/add-task-modal.tsx' with 'aria-describedby'.
 - All changes tested and committed/pushed to repo.
 
 ## What's Left to Build
@@ -33,7 +38,7 @@
 
 ## Current Status
 
-- Project is in Phase 4: AI parsing integration with OpenAI's GPT-4.1-mini (completed core integration, pending optimistic UI updates and error toasts).
+- Project is in Phase 4: AI parsing integration with OpenAI's GPT-4.1-mini and 'chrono-node' for date parsing (completed core integration, pending optimistic UI updates and error toasts).
 - All Phase 2 features (Firestore CRUD, time picker, mobile/desktop UX, edit/delete) are complete and live in main branch.
 - UI issues (task persistence after logout, profile picture display) have been resolved and confirmed working.
 - Documentation and memory bank files are up to date for AI or new developer handoff.
@@ -54,8 +59,14 @@
 - Resolved task persistence after logout by clearing tasks state in `app/page.tsx`.
 - Fixed profile picture display issue in `components/app-bar.tsx`, now displaying correctly.
 - Successfully integrated OpenAI's GPT-4.1-mini for AI task parsing, replacing Gemini after persistent 500 errors.
+- Integrated 'chrono-node' in 'src/lib/parseTask.ts' for improved date parsing with error handling and fuzzy phrase support.
+- Updated 'src/lib/firestore.ts' to remove client-side auth checks for server-side compatibility.
+- Harmonized types in 'src/lib/types.ts' and added 'userId' for server-side task management.
+- Added environment variable validation in 'src/lib/parseTask.ts' and 'src/lib/firebase.ts'.
+- Enhanced accessibility in dialog components with 'aria-describedby'.
 
 ### Pending
 - Address any remaining "Cannot find module" errors via IDE restart or cache clearing.
 - Implement optimistic UI updates and error toasts for AI task creation.
 - Complete email digest functionality.
+- Test the full task creation flow with 'chrono-node' integration for date parsing accuracy.

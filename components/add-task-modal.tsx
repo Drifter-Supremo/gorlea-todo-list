@@ -61,6 +61,7 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
       details: details.trim(),
       dueDate: due,
       priority,
+      userId: "mock-client-user-id" // Mock userId for client-side, should be handled by auth context in real implementation
     })
 
     // Reset form only if adding (not editing)
@@ -75,7 +76,8 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
 
   return (
     <Dialog open={isOpen} onOpenChange={(open: boolean) => !open && onClose()}>
-      <DialogContent className="bg-[#032934] text-[#F5E8C2] border-[#F5E8C2]/20 sm:max-w-[425px]">
+      <DialogContent className="bg-[#032934] text-[#F5E8C2] border-[#F5E8C2]/20 sm:max-w-[425px]" aria-describedby="dialog-description">
+        <span id="dialog-description" style={{ display: 'none' }}>{initialValues ? "Edit an existing task." : "Add a new task to your list."}</span>
         <DialogHeader>
           <DialogTitle className="text-[#F5E8C2]">
             {initialValues ? "Edit Task" : "Add New Task"}

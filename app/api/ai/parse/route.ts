@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { parseTask } from '@lib/parseTask'
+import { parseTask, resolveDate } from '@lib/parseTask'
+import { addTask } from '@lib/firestore'
 
 export async function POST(req: Request) {
   try {
@@ -11,7 +12,17 @@ export async function POST(req: Request) {
     }
 
     const parsedTask = await parseTask(input);
-    return NextResponse.json(parsedTask);
+    const dueTimestamp = parsedTask.datePhrase ? resolveDate(parsedTask.datePhrase) : resolveDate('');
+    const taskData = {
+      title: parsedTask.title,
+      details: parsedTask.details,
+      priority: (parsedTask.priority as 'low' | 'medium' | 'high') || 'medium',
+      dueDate: new Date(dueTimestamp),
+      userId: body.userId || "mock-user-id" // Mock userId for now, should be passed in request body
+    };
+    
+    await addTask(taskData);
+    return NextResponse.json({ success: true, title: parsedTask.title });
   } catch (error) {
     console.error('Error parsing task:', error);
     return NextResponse.json({ error: 'Failed to parse task', details: error?.toString() }, { status: 500 });
