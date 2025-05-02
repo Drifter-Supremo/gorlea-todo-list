@@ -131,8 +131,8 @@ export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
         aria-describedby="dialog-description"
       >
         <span id="dialog-description" style={{ display: 'none' }}>Chat dialog for interacting with Gorlea, your AI task assistant.</span>
-        <DialogHeader>
-          <DialogTitle>Chat with Gorlea</DialogTitle>
+        <DialogHeader className="pt-4 px-4">
+          <DialogTitle className="ml-2 mt-1">Chat with Gorlea</DialogTitle>
         </DialogHeader>
         <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
           <div className="space-y-4">
