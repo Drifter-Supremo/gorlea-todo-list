@@ -12,7 +12,7 @@ interface TaskRowProps {
   onEdit: (task: Task) => void
 }
 
-import { Trash, Edit2 } from "lucide-react"
+import { Trash } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "./ui/dialog"
 import { Button } from "./ui/button"
 import { useState } from "react"

@@ -30,13 +30,38 @@ export function AppBar() {
             className="rounded-full border border-[#F29600]"
           />
         )}
-        <Button
-          onClick={user ? logout : login}
-          className="bg-[#F29600] hover:bg-[#F29600]/90 text-[#032934] font-medium"
-          disabled={loading}
-        >
-          {loading ? "Loading..." : user ? "Sign Out" : "Sign In with Google"}
-        </Button>
+        {user ? (
+          <Button
+            onClick={logout}
+            className="bg-[#F29600] hover:bg-[#F29600]/90 text-[#032934] font-medium"
+            disabled={loading}
+          >
+            {loading ? "Loading..." : "Sign Out"}
+          </Button>
+        ) : (
+          <Button
+            onClick={login}
+            className="bg-white hover:bg-gray-100 text-gray-800 font-medium px-4 py-2 rounded shadow"
+            disabled={loading}
+          >
+            {loading ? (
+              "Loading..."
+            ) : (
+              <>
+                <div className="mr-2 w-5 h-5 relative">
+                  <Image
+                    src="/google-logo.svg"
+                    alt="Google Logo"
+                    width={20}
+                    height={20}
+                    className="object-contain"
+                  />
+                </div>
+                Sign in with Google
+              </>
+            )}
+          </Button>
+        )}
       </div>
     </header>
   )
