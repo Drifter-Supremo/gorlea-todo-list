@@ -72,6 +72,9 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
       setPriority("medium")
       setTime("09:00")
     }
+
+    // Close the modal after task creation
+    onClose()
   }
 
   return (

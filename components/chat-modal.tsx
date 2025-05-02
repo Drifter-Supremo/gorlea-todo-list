@@ -5,7 +5,7 @@ import { addTask } from "../src/lib/firestore"
 import { toast } from "./ui/use-toast"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog"
 import { Button } from "./ui/button"
-import { Input } from "./ui/input"
+import { Textarea } from "./ui/textarea"
 import { ScrollArea } from "./ui/scroll-area"
 import { Send } from "lucide-react"
 import { useAuth } from "../hooks/useAuth"
@@ -36,7 +36,7 @@ export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
     },
   ])
   const [input, setInput] = useState("")
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -83,20 +83,24 @@ export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
         throw new Error(`API request failed with status ${response.status}`)
       }
 
-      const result = await response.json()
+      // Parse the response but we don't need the result for the confirmation message
+      await response.json()
 
       // Add AI response to chat
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: `I've created a task: "${result.title}"`,
+        content: `✅ Task created!`,
         sender: "ai",
         timestamp: new Date(),
       }
       setMessages(prev => [...prev, aiMessage])
 
-      toast({ title: "✅ Task added!" })
-      onClose()
+      // Don't close the modal, just refresh tasks and clear input
       if (refreshTasks) refreshTasks()
+      setInput("")
+
+      // Show a minimal toast notification
+      toast({ title: "✅ Task created" })
     } catch (error) {
       console.error('Error processing task:', error)
       const errorMessage: Message = {
@@ -109,7 +113,7 @@ export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
       toast({ title: "Error", description: "Failed to add task", variant: "destructive" })
     }
 
-    setInput("")
+    // Input is cleared after successful task creation in the try block
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -149,13 +153,14 @@ export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
           </div>
         </ScrollArea>
         <div className="p-4 border-t border-[#F5E8C2]/10 flex items-center gap-2">
-          <Input
+          <Textarea
             ref={inputRef}
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Type your message..."
-            className="flex-1 bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus-visible:ring-[#F29600]"
+            className="flex-1 bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus-visible:ring-[#F29600] min-h-[40px] max-h-[120px] resize-none"
+            rows={1}
           />
           <Button
             onClick={handleSend}

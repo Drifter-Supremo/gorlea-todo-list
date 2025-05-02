@@ -29,18 +29,21 @@
 - Improved accessibility in 'components/chat-modal.tsx' and 'components/add-task-modal.tsx' with 'aria-describedby'.
 - Fixed Firebase initialization to work in both browser and server environments, enabling AI task creation.
 - Fixed task completion issue to preserve all task metadata when tasks are marked as complete.
+- Improved chat modal with textarea for multi-line input and automatic line wrapping.
+- Added confirmation message in AI chat after task creation with clean, minimal UI.
+- Modified add task modal to close automatically after task creation.
 - All changes tested and committed/pushed to repo.
 
 ## What's Left to Build
 
-- Implement optimistic UI updates and error toasts for AI task creation.
+- Implement optimistic UI updates for AI task creation.
 - Establish daily email digest functionality.
 - Prepare for deployment to Vercel and production testing.
 - Implement future enhancements: task filtering, categories, calendar view, notifications, advanced AI features.
 
 ## Current Status
 
-- Project is in Phase 4: AI parsing integration with OpenAI's GPT-4.1-mini and 'chrono-node' for date parsing (completed core integration, pending optimistic UI updates and error toasts).
+- Project is in Phase 4: AI parsing integration with OpenAI's GPT-4.1-mini and 'chrono-node' for date parsing (completed core integration and UI improvements, pending optimistic UI updates).
 - All Phase 2 features (Firestore CRUD, time picker, mobile/desktop UX, edit/delete) are complete and live in main branch.
 - UI issues (task persistence after logout, profile picture display) have been resolved and confirmed working.
 - Documentation and memory bank files are up to date for AI or new developer handoff.
@@ -49,7 +52,7 @@
 
 - Some "Cannot find module" errors may persist due to TypeScript cache or IDE issues, resolvable by restart or cache clearing.
 - No deployed version available yet.
-- Optimistic UI updates and error toasts for AI task creation are not yet implemented.
+- Optimistic UI updates for AI task creation are not yet implemented.
 - API keys are exposed in console logs when debugging is enabled - should be removed for production.
 
 ## May 2025
@@ -72,10 +75,14 @@
 - Updated 'app/page.tsx' to preserve all task metadata when tasks are marked as complete.
 - Removed API key exposure from console logs in 'src/lib/firebase.ts' for improved security.
 - Fixed API route imports in 'app/api/ai/parse/route.ts' to use relative paths instead of path aliases.
+- Improved chat modal in 'components/chat-modal.tsx' with textarea for multi-line input and automatic line wrapping.
+- Added clean, minimal confirmation message in AI chat after task creation.
+- Added toast notification for AI task creation with minimal design.
+- Modified add task modal in 'components/add-task-modal.tsx' to close automatically after task creation.
 
 ### Pending
 - Address any remaining "Cannot find module" errors via IDE restart or cache clearing.
-- Implement optimistic UI updates and error toasts for AI task creation.
+- Implement optimistic UI updates for AI task creation.
 - Complete email digest functionality.
 - Test the full task creation flow with 'chrono-node' integration for date parsing accuracy.
 - Remove any remaining debug logging of sensitive information before production deployment.
