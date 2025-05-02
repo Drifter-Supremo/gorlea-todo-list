@@ -97,7 +97,7 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
               placeholder="What needs to be done?"
               value={title}
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setTitle(e.target.value)}
-              className="bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus-visible:ring-[#F29600]"
+              className="bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus-visible:ring-[#F29600] transition-all duration-300 ease-in-out hover:border-[#F5E8C2]/40"
             />
           </div>
           <div className="grid gap-2">
@@ -109,7 +109,7 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
               placeholder="Add more details (optional)"
               value={details}
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDetails(e.target.value)}
-              className="bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus-visible:ring-[#F29600]"
+              className="bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus-visible:ring-[#F29600] transition-all duration-300 ease-in-out hover:border-[#F5E8C2]/40"
               rows={3}
             />
           </div>
@@ -121,11 +121,11 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
                 <Button
                   variant="outline"
                   className={cn(
-                    "justify-start text-left font-normal bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] hover:bg-[#032934]/90 hover:text-[#F5E8C2]",
+                    "group justify-start text-left font-normal bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] hover:bg-[#032934]/90 hover:text-[#F5E8C2] transition-all duration-300 ease-in-out hover:border-[#F5E8C2]/40",
                     !dueDate && "text-muted-foreground",
                   )}
                 >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  <CalendarIcon className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:rotate-12" />
                   {dueDate ? format(dueDate, "PPP") : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
@@ -147,12 +147,12 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
               Time
             </Label>
             <Select value={time} onValueChange={setTime}>
-              <SelectTrigger id="time" className="bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus:ring-[#F29600]">
+              <SelectTrigger id="time" className="bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus:ring-[#F29600] transition-all duration-300 ease-in-out hover:border-[#F5E8C2]/40">
                 <SelectValue placeholder="Select time" />
               </SelectTrigger>
               <SelectContent className="bg-[#032934] border-[#F5E8C2]/20 max-h-60 overflow-y-auto">
                 {timeOptions.map((opt) => (
-                  <SelectItem key={opt.value} value={opt.value} className="text-[#F5E8C2] focus:bg-[#F29600]/20">
+                  <SelectItem key={opt.value} value={opt.value} className="text-[#F5E8C2] focus:bg-[#F29600]/20 transition-colors duration-200 hover:bg-[#F29600]/10">
                     {opt.label}
                   </SelectItem>
                 ))}
@@ -167,18 +167,18 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
             <Select value={priority} onValueChange={(value: any) => setPriority(value)}>
               <SelectTrigger
                 id="priority"
-                className="bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus:ring-[#F29600]"
+                className="bg-[#032934] border-[#F5E8C2]/20 text-[#F5E8C2] focus:ring-[#F29600] transition-all duration-300 ease-in-out hover:border-[#F5E8C2]/40"
               >
                 <SelectValue placeholder="Select priority" />
               </SelectTrigger>
               <SelectContent className="bg-[#032934] border-[#F5E8C2]/20">
-                <SelectItem value="low" className="text-[#F5E8C2] focus:bg-[#F29600]/20">
+                <SelectItem value="low" className="text-[#F5E8C2] focus:bg-[#F29600]/20 transition-colors duration-200 hover:bg-[#F29600]/10">
                   Low
                 </SelectItem>
-                <SelectItem value="medium" className="text-[#F5E8C2] focus:bg-[#F29600]/20">
+                <SelectItem value="medium" className="text-[#F5E8C2] focus:bg-[#F29600]/20 transition-colors duration-200 hover:bg-[#F29600]/10">
                   Medium
                 </SelectItem>
-                <SelectItem value="high" className="text-[#F5E8C2] focus:bg-[#F29600]/20">
+                <SelectItem value="high" className="text-[#F5E8C2] focus:bg-[#F29600]/20 transition-colors duration-200 hover:bg-[#F29600]/10">
                   High
                 </SelectItem>
               </SelectContent>
@@ -189,7 +189,7 @@ export function AddTaskModal({ isOpen, onClose, onAddTask, initialValues }: AddT
         <DialogFooter>
           <Button
             onClick={handleSubmit}
-            className="bg-[#F29600] hover:bg-[#F29600]/90 text-[#032934]"
+            className="bg-[#F29600] hover:bg-[#F29600]/90 text-[#032934] transition-all duration-300 ease-in-out hover:scale-105 active:scale-95"
             disabled={!title.trim()}
           >
             {initialValues ? "Save Changes" : "Save Task"}

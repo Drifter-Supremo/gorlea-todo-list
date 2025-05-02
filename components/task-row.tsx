@@ -72,7 +72,7 @@ export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowP
   return (
     <>
       <div
-        className="p-3 rounded-md bg-[#032934] border border-[#F5E8C2]/10 hover:border-[#F5E8C2]/20 transition-colors cursor-pointer"
+        className="p-3 rounded-md bg-[#032934] border border-[#F5E8C2]/10 hover:border-[#F5E8C2]/20 transition-all duration-300 ease-in-out hover:border-[#F5E8C2]/20 cursor-pointer animate-in fade-in slide-in-from-left-5 duration-300"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
@@ -83,22 +83,22 @@ export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowP
           <Checkbox
             checked={task.completed}
             onCheckedChange={() => onToggleCompletion(task.id)}
-            className="border-[#F29600] data-[state=checked]:bg-[#F29600] data-[state=checked]:text-[#032934]"
+            className="border-[#F29600] data-[state=checked]:bg-[#F29600] data-[state=checked]:text-[#032934] transition-all duration-300 ease-in-out hover:scale-110 focus:scale-110"
             onClick={e => e.stopPropagation()}
           />
           <div className="flex-1 min-w-0">
             <p
-              className={`text-sm font-medium truncate ${task.completed ? "line-through text-[#F5E8C2]/50" : "text-[#F5E8C2]"}`}
+              className={`text-sm font-medium truncate transition-all duration-300 ${task.completed ? "line-through text-[#F5E8C2]/50" : "text-[#F5E8C2]"}`}
             >
               {task.title.length > 32 ? task.title.slice(0, 32) + "..." : task.title}
             </p>
           </div>
-          <Badge variant={getBadgeVariant() as any} className="ml-auto">
+          <Badge variant={getBadgeVariant() as any} className="ml-auto transition-all duration-300 ease-in-out hover:scale-105">
             {formatDueDate(task.dueDate)}
           </Badge>
           <button
             title="Delete Task"
-            className="ml-1 p-1 rounded hover:bg-red-600/20 text-[#F5E8C2]"
+            className="ml-1 p-1 rounded hover:bg-red-600/20 text-[#F5E8C2] transition-all duration-300 ease-in-out hover:scale-110 active:scale-95"
             onClick={e => { e.stopPropagation(); setShowDeleteDialog(true); }}
           >
             <Trash className="w-4 h-4" />
@@ -111,19 +111,19 @@ export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowP
             <Checkbox
               checked={task.completed}
               onCheckedChange={() => onToggleCompletion(task.id)}
-              className="border-[#F29600] data-[state=checked]:bg-[#F29600] data-[state=checked]:text-[#032934]"
+              className="border-[#F29600] data-[state=checked]:bg-[#F29600] data-[state=checked]:text-[#032934] transition-all duration-300 ease-in-out hover:scale-110 focus:scale-110"
               onClick={e => e.stopPropagation()}
             />
             <div className="flex-1 min-w-0">
               <p
-                className={`text-sm font-medium ${task.completed ? "line-through text-[#F5E8C2]/50" : "text-[#F5E8C2]"}`}
+                className={`text-sm font-medium transition-all duration-300 ${task.completed ? "line-through text-[#F5E8C2]/50" : "text-[#F5E8C2]"}`}
               >
                 {task.title}
               </p>
             </div>
           </div>
           <div className="flex justify-end">
-            <Badge variant={getBadgeVariant() as any}>
+            <Badge variant={getBadgeVariant() as any} className="transition-all duration-300 ease-in-out hover:scale-105">
               {formatDueDate(task.dueDate)}
             </Badge>
           </div>

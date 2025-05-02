@@ -164,7 +164,7 @@ export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
           />
           <Button
             onClick={handleSend}
-            className="bg-[#F29600] hover:bg-[#F29600]/90 text-[#032934] px-3"
+            className="bg-[#F29600] hover:bg-[#F29600]/90 text-[#032934] px-3 transition-all duration-300 ease-in-out hover:scale-105 active:scale-95"
             disabled={!input.trim()}
           >
             <Send className="h-4 w-4" />
