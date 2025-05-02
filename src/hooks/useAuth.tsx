@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { auth } from "../lib/firebase";
+import { getFirebase } from "../lib/firebase";
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -14,7 +14,7 @@ export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(getFirebase().auth!, (user) => {
       setUser(user);
     });
 
@@ -24,7 +24,7 @@ export function useAuth() {
   const login = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      await signInWithPopup(getFirebase().auth!, provider);
     } catch (error) {
       console.error("Login error:", error);
     }
@@ -32,7 +32,7 @@ export function useAuth() {
 
   const logout = async () => {
     try {
-      await signOut(auth);
+      await signOut(getFirebase().auth!);
     } catch (error) {
       console.error("Logout error:", error);
     }

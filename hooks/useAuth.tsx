@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { auth } from "../src/lib/firebase";
+import { getFirebase } from "../src/lib/firebase";
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -13,7 +13,7 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(getFirebase().auth!, (firebaseUser) => {
       setUser(firebaseUser);
       setLoading(false);
     });
@@ -22,11 +22,11 @@ export function useAuth() {
 
   const login = useCallback(async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    await signInWithPopup(getFirebase().auth!, provider);
   }, []);
 
   const logout = useCallback(async () => {
-    await signOut(auth);
+    await signOut(getFirebase().auth!);
   }, []);
 
   return { user, loading, login, logout };

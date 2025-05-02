@@ -27,6 +27,8 @@
 - Harmonized 'Task' and 'TaskInput' types in 'src/lib/types.ts' with 'userId' for consistency.
 - Added environment variable validation in 'src/lib/parseTask.ts' and 'src/lib/firebase.ts' to prevent runtime errors.
 - Improved accessibility in 'components/chat-modal.tsx' and 'components/add-task-modal.tsx' with 'aria-describedby'.
+- Fixed Firebase initialization to work in both browser and server environments, enabling AI task creation.
+- Fixed task completion issue to preserve all task metadata when tasks are marked as complete.
 - All changes tested and committed/pushed to repo.
 
 ## What's Left to Build
@@ -48,6 +50,7 @@
 - Some "Cannot find module" errors may persist due to TypeScript cache or IDE issues, resolvable by restart or cache clearing.
 - No deployed version available yet.
 - Optimistic UI updates and error toasts for AI task creation are not yet implemented.
+- API keys are exposed in console logs when debugging is enabled - should be removed for production.
 
 ## May 2025
 
@@ -64,9 +67,15 @@
 - Harmonized types in 'src/lib/types.ts' and added 'userId' for server-side task management.
 - Added environment variable validation in 'src/lib/parseTask.ts' and 'src/lib/firebase.ts'.
 - Enhanced accessibility in dialog components with 'aria-describedby'.
+- Fixed Firebase initialization in 'src/lib/firebase.ts' to work in both browser and server environments, enabling AI task creation.
+- Modified 'src/lib/firestore.ts' to properly handle the 'completed' property when updating tasks.
+- Updated 'app/page.tsx' to preserve all task metadata when tasks are marked as complete.
+- Removed API key exposure from console logs in 'src/lib/firebase.ts' for improved security.
+- Fixed API route imports in 'app/api/ai/parse/route.ts' to use relative paths instead of path aliases.
 
 ### Pending
 - Address any remaining "Cannot find module" errors via IDE restart or cache clearing.
 - Implement optimistic UI updates and error toasts for AI task creation.
 - Complete email digest functionality.
 - Test the full task creation flow with 'chrono-node' integration for date parsing accuracy.
+- Remove any remaining debug logging of sensitive information before production deployment.

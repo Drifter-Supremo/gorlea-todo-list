@@ -8,6 +8,7 @@ import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { ScrollArea } from "./ui/scroll-area"
 import { Send } from "lucide-react"
+import { useAuth } from "../hooks/useAuth"
 
 interface ChatModalProps {
   isOpen: boolean
@@ -23,6 +24,9 @@ interface Message {
 }
 
 export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
+  const { user } = useAuth();
+  const userId = user?.uid;
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -52,7 +56,7 @@ export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
 
   const handleSend = async () => {
     if (!input.trim()) return
-    
+
     // Add user message to chat
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -61,7 +65,7 @@ export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
       timestamp: new Date(),
     }
     setMessages(prev => [...prev, userMessage])
-    
+
     try {
       // Call API route to parse task
       const response = await fetch('/api/ai/parse', {
@@ -69,15 +73,18 @@ export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ input }),
+        body: JSON.stringify({
+          input,
+          userId: userId || "anonymous-user"
+        }),
       })
-      
+
       if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`)
       }
-      
+
       const result = await response.json()
-      
+
       // Add AI response to chat
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -86,7 +93,7 @@ export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
         timestamp: new Date(),
       }
       setMessages(prev => [...prev, aiMessage])
-      
+
       toast({ title: "✅ Task added!" })
       onClose()
       if (refreshTasks) refreshTasks()
@@ -101,7 +108,7 @@ export function ChatModal({ isOpen, onClose, refreshTasks }: ChatModalProps) {
       setMessages(prev => [...prev, errorMessage])
       toast({ title: "Error", description: "Failed to add task", variant: "destructive" })
     }
-    
+
     setInput("")
   }
 

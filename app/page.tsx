@@ -20,6 +20,8 @@ export default function Home() {
   const [editTask, setEditTask] = useState<Task | null>(null)
   const [isChatModalOpen, setIsChatModalOpen] = useState(false)
 
+  // Environment variables are loaded from .env.local
+
   // Fetch tasks from Firestore on load and after changes
   const refreshTasks = useCallback(() => {
     if (!userId) {
@@ -35,20 +37,38 @@ export default function Home() {
 
   // Add a new task
   async function handleAddTask(data: TaskInput): Promise<string> {
-    const newId = await addTask(data)
+    const newId = await addTask({ ...data, userId })
     setTasks(ts => [...ts, { id: newId, completed: false, ...data }])
     return newId
   }
 
   // Update a task
-  async function handleUpdateTask(id: string, updates: Partial<TaskInput>): Promise<void> {
-    await updateTask(id, updates)
-    setTasks(ts => ts.map(task => task.id === id ? { ...task, ...updates } : task))
+  async function handleUpdateTask(id: string, updates: Partial<TaskInput> & { completed?: boolean }): Promise<void> {
+    // Find the existing task to get current values
+    const existingTask = tasks.find(task => task.id === id);
+    if (!existingTask) return;
+
+    // Ensure required fields have default values if not provided in updates
+    const taskUpdates = {
+      id,
+      userId,
+      title: updates.title !== undefined ? updates.title : existingTask.title || '',
+      details: updates.details !== undefined ? updates.details : existingTask.details || '',
+      dueDate: updates.dueDate !== undefined ? updates.dueDate : existingTask.dueDate || null,
+      priority: updates.priority !== undefined ? updates.priority : existingTask.priority || 'medium',
+      completed: updates.completed !== undefined ? updates.completed : existingTask.completed
+    };
+
+    await updateTask(taskUpdates);
+
+    // Create a complete updated task with all properties preserved
+    const updatedTask = { ...existingTask, ...updates };
+    setTasks(ts => ts.map(task => task.id === id ? updatedTask : task));
   }
 
   // Delete a task
   async function handleDeleteTask(id: string): Promise<void> {
-    await deleteTask(id)
+    await deleteTask(id, userId)
     setTasks(ts => ts.filter(task => task.id !== id))
   }
 
