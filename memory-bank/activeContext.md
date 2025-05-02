@@ -18,6 +18,11 @@
 - Simplified date handling by removing date validation in both the chat modal and add task modal, allowing users to create tasks with any date.
 - Fixed Firebase initialization in 'src/lib/firebase.ts' to work in both browser and server environments, enabling AI task creation functionality.
 - Modified 'src/lib/firestore.ts' to properly handle the 'completed' property when updating tasks, ensuring task metadata is preserved.
+- Improved the chat modal UI by repositioning the 'Chat with Gorlea' text for better mobile appearance.
+- Enhanced task cards on mobile with better spacing and layout to prevent text from being cut off.
+- Styled the Google sign-in button with the Google G logo and brand colors for better recognition.
+- Added smooth animations throughout the UI/UX for a more polished experience, including sign-in/sign-out buttons, task rows, checkboxes, and action buttons.
+- Implemented collapsible completed tasks section to save space and improve user experience.
 - Updated 'app/page.tsx' to preserve all task metadata when tasks are marked as complete, fixing the issue where completed tasks lost their data after page refresh.
 - Removed API key exposure from console logs in 'src/lib/firebase.ts' and 'app/page.tsx' for improved security.
 - Fixed API route imports in 'app/api/ai/parse/route.ts' to use relative paths instead of path aliases, resolving 500 errors during AI task creation.

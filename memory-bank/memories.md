@@ -6,6 +6,11 @@
 - In the AI chat modal, the input should be a textarea that wraps text.
 - In the add task modal, close the modal automatically after task creation.
 - In the AI chat modal, toast notifications should be clean and minimal, showing only a checkmark and success message without including the task title.
+- The 'Chat with Gorlea' text in the chat modal should be positioned lower and more to the right for better appearance on mobile devices.
+- Task cards on mobile should have better spacing and layout to prevent title and due date text from being cut off.
+- The Google sign-in button should be styled with the Google G logo and Google brand colors.
+- Smooth animations should be used throughout the UI/UX, including for actions like signing in and signing out.
+- Completed tasks should be collapsible to save space, with styling consistent with the rest of the app.
 
 ## Security
 

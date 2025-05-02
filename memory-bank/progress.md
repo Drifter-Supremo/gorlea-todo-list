@@ -85,6 +85,11 @@
 - Implemented overdue task feature in 'components/task-row.tsx' to display "Overdue" label with red badge for past-due tasks.
 - Updated 'components/task-list.tsx' to sort overdue tasks at the top of the task list for better visibility.
 - Simplified date handling by removing date validation in both the chat modal and add task modal, allowing users to create tasks with any date.
+- Improved the chat modal UI by repositioning the 'Chat with Gorlea' text for better mobile appearance.
+- Enhanced task cards on mobile with better spacing and layout to prevent text from being cut off.
+- Styled the Google sign-in button with the Google G logo and brand colors for better recognition.
+- Added smooth animations throughout the UI/UX for a more polished experience, including sign-in/sign-out buttons, task rows, checkboxes, and action buttons.
+- Implemented collapsible completed tasks section to save space and improve user experience.
 
 ### Pending
 - Address any remaining "Cannot find module" errors via IDE restart or cache clearing.

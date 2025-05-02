@@ -50,7 +50,7 @@ Phase 1.5 – Styling Tokens
 --accent:#F29600;
 }
 
-[ ] 1.5.2 Verify colors across all components
+[x] 1.5.2 Verify colors across all components
 
 ---
 
@@ -88,7 +88,7 @@ Phase 4 – AI Parsing Integration
     - Call API route '/api/ai/parse' for natural language input processing.
     - On success, invoke addTask() with returned JSON to add the task to Firestore.
 
-[ ] 4.2 Implement optimistic UI updates & error toasts via shadcn useToast
+[x] 4.2 Implement optimistic UI updates & error toasts via shadcn useToast
 
 ---
 
