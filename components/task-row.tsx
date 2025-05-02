@@ -72,36 +72,63 @@ export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowP
   return (
     <>
       <div
-        className="flex items-center space-x-3 p-3 rounded-md bg-[#032934] border border-[#F5E8C2]/10 hover:border-[#F5E8C2]/20 transition-colors cursor-pointer"
+        className="p-3 rounded-md bg-[#032934] border border-[#F5E8C2]/10 hover:border-[#F5E8C2]/20 transition-colors cursor-pointer"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
         onClick={() => setShowDetailsModal(true)}
       >
-      <Checkbox
-        checked={task.completed}
-        onCheckedChange={() => onToggleCompletion(task.id)}
-        className="border-[#F29600] data-[state=checked]:bg-[#F29600] data-[state=checked]:text-[#032934]"
-        onClick={e => e.stopPropagation()}
-      />
-      <div className="flex-1 min-w-0">
-        <p
-          className={`text-sm font-medium truncate ${task.completed ? "line-through text-[#F5E8C2]/50" : "text-[#F5E8C2]"}`}
-        >
-          {task.title.length > 32 ? task.title.slice(0, 32) + "..." : task.title}
-        </p>
+        {/* Desktop layout (hidden on small screens) */}
+        <div className="hidden sm:flex items-center space-x-3">
+          <Checkbox
+            checked={task.completed}
+            onCheckedChange={() => onToggleCompletion(task.id)}
+            className="border-[#F29600] data-[state=checked]:bg-[#F29600] data-[state=checked]:text-[#032934]"
+            onClick={e => e.stopPropagation()}
+          />
+          <div className="flex-1 min-w-0">
+            <p
+              className={`text-sm font-medium truncate ${task.completed ? "line-through text-[#F5E8C2]/50" : "text-[#F5E8C2]"}`}
+            >
+              {task.title.length > 32 ? task.title.slice(0, 32) + "..." : task.title}
+            </p>
+          </div>
+          <Badge variant={getBadgeVariant() as any} className="ml-auto">
+            {formatDueDate(task.dueDate)}
+          </Badge>
+          <button
+            title="Delete Task"
+            className="ml-1 p-1 rounded hover:bg-red-600/20 text-[#F5E8C2]"
+            onClick={e => { e.stopPropagation(); setShowDeleteDialog(true); }}
+          >
+            <Trash className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Mobile layout (visible only on small screens) */}
+        <div className="flex flex-col space-y-2 sm:hidden">
+          <div className="flex items-center space-x-3">
+            <Checkbox
+              checked={task.completed}
+              onCheckedChange={() => onToggleCompletion(task.id)}
+              className="border-[#F29600] data-[state=checked]:bg-[#F29600] data-[state=checked]:text-[#032934]"
+              onClick={e => e.stopPropagation()}
+            />
+            <div className="flex-1 min-w-0">
+              <p
+                className={`text-sm font-medium ${task.completed ? "line-through text-[#F5E8C2]/50" : "text-[#F5E8C2]"}`}
+              >
+                {task.title}
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-end">
+            <Badge variant={getBadgeVariant() as any}>
+              {formatDueDate(task.dueDate)}
+            </Badge>
+          </div>
+        </div>
       </div>
-      <Badge variant={getBadgeVariant() as any} className="ml-auto">
-        {formatDueDate(task.dueDate)}
-      </Badge>
-      <button
-        title="Delete Task"
-        className="ml-1 p-1 rounded hover:bg-red-600/20 text-[#F5E8C2] hidden sm:inline-flex"
-        onClick={e => { e.stopPropagation(); setShowDeleteDialog(true); }}
-      >
-        <Trash className="w-4 h-4" />
-      </button>
-    </div>
 
       {/* Long-press Action Modal */}
       <Dialog open={showActionModal} onOpenChange={setShowActionModal}>
