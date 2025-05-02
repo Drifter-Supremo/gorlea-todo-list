@@ -33,7 +33,7 @@
 
 ## Active Decisions & Considerations
 
-- For the prototype phase, we're using hardcoded Firebase configuration in the source code to ensure functionality. This will need to be changed to environment variables before production deployment.
+- Implemented a secure approach for Firebase configuration using environment variables with fallbacks to default values, allowing the app to work in development without exposing secrets in the repository.
 - Continue monitoring task completion functionality to ensure metadata is properly preserved in both UI state and Firestore.
 - Maintain documentation consistency with project style, focusing on detailed updates for testing phases to support future development.
 - Consider implementing additional error handling for edge cases in the AI task creation flow.
