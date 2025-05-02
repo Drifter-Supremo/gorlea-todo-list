@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { TaskRow } from "./task-row"
 import { EmptyState } from "./empty-state"
 import type { Task } from "../src/lib/types"
+import { isPast } from "date-fns"
 
 interface TaskListProps {
   tasks: Task[]
@@ -17,11 +18,22 @@ export function TaskList({ tasks, onToggleCompletion, onDelete, onEdit }: TaskLi
   const incompleteTasks = tasks.filter((task) => !task.completed)
   const completedTasks = tasks.filter((task) => task.completed)
 
-  // Sort tasks by due date (earliest first), handle null/undefined dueDate
+  // Sort tasks by overdue status first, then by due date (earliest first)
   const sortedIncompleteTasks = [...incompleteTasks].sort((a, b) => {
-    if (!a.dueDate) return -1
-    if (!b.dueDate) return 1
-    return a.dueDate.getTime() - b.dueDate.getTime()
+    const now = new Date();
+
+    // Check if tasks are overdue
+    const aIsOverdue = a.dueDate && !isNaN(a.dueDate.getTime()) && a.dueDate < now;
+    const bIsOverdue = b.dueDate && !isNaN(b.dueDate.getTime()) && b.dueDate < now;
+
+    // Sort overdue tasks first
+    if (aIsOverdue && !bIsOverdue) return -1;
+    if (!aIsOverdue && bIsOverdue) return 1;
+
+    // If both are overdue or both are not overdue, sort by due date
+    if (!a.dueDate) return 1;  // Tasks without due dates go last
+    if (!b.dueDate) return -1;
+    return a.dueDate.getTime() - b.dueDate.getTime();
   })
 
   return (

@@ -7,10 +7,15 @@
 - Addressed security concerns by removing API key exposure in console logs.
 - Integrated 'chrono-node' library for enhanced date and time parsing in natural language task input, complementing OpenAI's GPT-4.1-mini integration.
 - Refactored codebase to address authentication issues, type harmonization, and accessibility improvements.
+- Implemented overdue task feature to display past-due tasks with "Overdue" label and red badge, prioritizing them at the top of the task list.
+- Simplified date handling by allowing users to create tasks with any date (past or future) without validation restrictions.
 - Emphasizing testing of the latest updates to ensure stability and accuracy in task creation and date parsing.
 
 ## Recent Changes
 
+- Implemented overdue task feature in 'components/task-row.tsx' to display "Overdue" label with red badge for past-due tasks.
+- Updated 'components/task-list.tsx' to sort overdue tasks at the top of the task list for better visibility.
+- Simplified date handling by removing date validation in both the chat modal and add task modal, allowing users to create tasks with any date.
 - Fixed Firebase initialization in 'src/lib/firebase.ts' to work in both browser and server environments, enabling AI task creation functionality.
 - Modified 'src/lib/firestore.ts' to properly handle the 'completed' property when updating tasks, ensuring task metadata is preserved.
 - Updated 'app/page.tsx' to preserve all task metadata when tasks are marked as complete, fixing the issue where completed tasks lost their data after page refresh.

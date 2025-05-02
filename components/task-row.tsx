@@ -35,7 +35,11 @@ export function TaskRow({ task, onToggleCompletion, onDelete, onEdit }: TaskRowP
   // Format the due date
   const formatDueDate = (date: Date | null | undefined) => {
     if (!date || isNaN(date.getTime())) return "No Date"
-    if (isToday(date)) {
+
+    // Check if the task is overdue
+    if (isPast(date) && !task.completed) {
+      return "Overdue"
+    } else if (isToday(date)) {
       return "Today"
     } else if (isTomorrow(date)) {
       return "Tomorrow"

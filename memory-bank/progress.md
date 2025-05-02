@@ -32,6 +32,9 @@
 - Improved chat modal with textarea for multi-line input and automatic line wrapping.
 - Added confirmation message in AI chat after task creation with clean, minimal UI.
 - Modified add task modal to close automatically after task creation.
+- Implemented overdue task feature to display past-due tasks with "Overdue" label and red badge.
+- Updated task list to sort overdue tasks at the top for better visibility.
+- Simplified date handling by allowing users to create tasks with any date (past or future) without validation restrictions.
 - All changes tested and committed/pushed to repo.
 
 ## What's Left to Build
@@ -79,6 +82,9 @@
 - Added clean, minimal confirmation message in AI chat after task creation.
 - Added toast notification for AI task creation with minimal design.
 - Modified add task modal in 'components/add-task-modal.tsx' to close automatically after task creation.
+- Implemented overdue task feature in 'components/task-row.tsx' to display "Overdue" label with red badge for past-due tasks.
+- Updated 'components/task-list.tsx' to sort overdue tasks at the top of the task list for better visibility.
+- Simplified date handling by removing date validation in both the chat modal and add task modal, allowing users to create tasks with any date.
 
 ### Pending
 - Address any remaining "Cannot find module" errors via IDE restart or cache clearing.
